@@ -5,6 +5,7 @@ int main(){
   init(&list);
   int select = 1;
   ElemType item;
+  int index;
   while(select){
     printf("*****************************************\n");
     printf("*** [1]   push_back   [2]  push_front ***\n");
@@ -44,6 +45,25 @@ int main(){
       break;
     case 5:
       pop_front(&list);
+      show_list(&list);
+      break;
+    case 6:
+      printf("请输入要插入的数据>\n");
+      scanf("%d",&item);
+      printf("请输入要插入的index>\n");
+      scanf("%d",&index);
+      insert_pos(&list, item, index);
+      show_list(&list);
+      break;
+    case 7:
+      printf("请输入要插入的数据>\n");
+      scanf("%d",&item);
+      index = find(&list, item);
+      if(index = -1){
+	printf("can not find %d \n", item);
+      }else{
+	printf("find %d at position %d", item, index);
+      }
       show_list(&list);
       break;
     default:

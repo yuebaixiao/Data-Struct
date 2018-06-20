@@ -21,4 +21,6 @@ void show_list(SeqList*);
 void push_front(SeqList*, ElemType);
 void pop_back(SeqList*);
 void pop_front(SeqList*);
+void insert_pos(SeqList*, ElemType, int);
+int find(SeqList*, ElemType);
 #endif

@@ -38,6 +38,22 @@ void pop_front(SeqList* seq){
   memmove(seq->base, seq->base+1,seq->size * sizeof(ElemType));
   seq->size--;
 }
+void insert_pos(SeqList* seq, ElemType x, int index){
+  if(seq->size >= seq->cap){
+    printf("线性表已满\n");
+    return;
+  }
+  if(index < 0 || index > seq->size){
+    printf("given index is error\n");
+    return;
+  }
+  memmove(seq->base+index+1,seq->base+index,(seq->size-index)*sizeof(ElemType));
+  seq->base[index] = x;
+  seq->size++;
+}
+int find(SeqList* seq, ElemType x){
+
+}
 void show_list(SeqList* seq){
   for(int i = 0; i < seq->size; ++i){
     printf("%d ", seq->base[i]);
