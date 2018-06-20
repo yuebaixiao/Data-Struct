@@ -77,7 +77,7 @@ int main(){
       show_list(&list);
       break;
     case 10:
-      printf("please enter the value what you shoule delete>\n");
+      printf("please enter the value what you shoule delete >\n");
       scanf("%d", &item);
       delete_val(&list, item);
       show_list(&list);
