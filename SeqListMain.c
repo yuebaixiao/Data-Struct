@@ -14,7 +14,7 @@ int main(){
     printf("*** [7]   find        [8]  length     ***\n");
     printf("*** [9]   delete_pos  [10] delete_val ***\n");
     printf("*** [11]  sort1       [12] resver     ***\n");
-    printf("*** [13]  clear       [14] destroy    ***\n");
+    printf("*** [13]  clear       [14*] destroy    ***\n");
     printf("*** [0]   quit        [15] sort2      ***\n");
     printf("*****************************************\n");
     printf("请选择:>");
@@ -86,9 +86,22 @@ int main(){
       sort1(&list);
       show_list(&list);
       break;
+    case 12:
+      resver(&list);
+      show_list(&list);
+      break;
+    case 13:
+      clear(&list);
+      show_list(&list);
+      break;
+    case 15:
+      sort2(&list);
+      show_list(&list);
+      break;
     default:
       printf("输入的选择错误，请重新选择\n");
       break;
     }
   }
+  destroy(&list);
 }

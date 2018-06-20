@@ -1,5 +1,17 @@
 #include "SeqList.h"
 
+bool reInit(SeqList* seq){
+  ElemType* newp = (ElemType*)realloc(seq->base,(seq->size+1)*sizeof(ElemType));
+  if(NULL == newp){
+    return true;
+  }
+  if(seq->base != newp){
+    memmove(seq->base, newp, sizeof(ElemType)*seq->size);
+    seq->base = newp;
+  }
+  seq->cap++;
+  return false;
+}
 void init(SeqList* seq){
   seq->base = (ElemType*)malloc(sizeof(ElemType) * SEQLIST_INIT_SIZE);
   assert(NULL != seq->base);
@@ -7,7 +19,7 @@ void init(SeqList* seq){
   seq->size = 0;
 }
 void push_back(SeqList* seq, ElemType x){
-  if(seq->size >= seq->cap){
+  if(seq->size >= seq->cap && reInit(seq)){
     printf("线性表已满\n");
     return;
   }
@@ -15,7 +27,7 @@ void push_back(SeqList* seq, ElemType x){
   seq->size++;
 }
 void push_front(SeqList* seq, ElemType x){
-  if(seq->size >= seq->cap){
+  if(seq->size >= seq->cap && reInit(seq)){
     printf("线性表已满\n");
     return;
   }
@@ -39,7 +51,7 @@ void pop_front(SeqList* seq){
   seq->size--;
 }
 void insert_pos(SeqList* seq, ElemType x, int index){
-  if(seq->size >= seq->cap){
+  if(seq->size >= seq->cap && reInit(seq)){
     printf("线性表已满\n");
     return;
   }
@@ -95,7 +107,31 @@ void sort1(SeqList* seq){
   }
 }
 void sort2(SeqList* seq){
-
+  for(int i = 0; i < seq->size-1; ++i){
+    for(int j = 0; j < seq->size-1-i; ++j){
+      if(seq->base[j] < seq->base[j+1]){
+	seq->base[j] = seq->base[j] + seq->base[j+1];
+	seq->base[j+1] = seq->base[j] - seq->base[j+1];
+	seq->base[j] = seq->base[j] - seq->base[j+1];
+      }
+    }
+  }
+}
+void resver(SeqList* seq){
+  for(int i = 0; i < seq->size / 2; ++i){
+    ElemType tmp = seq->base[i];
+    seq->base[i] = seq->base[seq->size-i-1];
+    seq->base[seq->size-i-1] = tmp;
+  }
+}
+void clear(SeqList* seq){
+  seq->size = 0;
+}
+void destroy(SeqList* seq){
+  free(seq->base);
+  seq->base = NULL;
+  seq->cap = 0;
+  seq->size = 0;
 }
 void show_list(SeqList* seq){
   for(int i = 0; i < seq->size; ++i){

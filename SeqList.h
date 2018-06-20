@@ -5,6 +5,7 @@
 #include <malloc.h>
 #include <assert.h>
 #include <memory.h>
+#include <stdbool.h>
 
 #define SEQLIST_INIT_SIZE 8
 typedef int ElemType;
@@ -28,4 +29,7 @@ void delete_pos(SeqList*, int);
 void delete_val(SeqList*, int);
 void sort1(SeqList*);
 void sort2(SeqList*);
+void resver(SeqList*);
+void clear(SeqList*);
+void destroy(SeqList*);
 #endif
