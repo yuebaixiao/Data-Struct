@@ -4,6 +4,7 @@ int main(){
   SeqList list;
   init(&list);
   int select = 1;
+  ElemType item;
   while(select){
     printf("*****************************************\n");
     printf("*** [1]   push_back   [2]  push_front ***\n");
@@ -21,8 +22,32 @@ int main(){
       break;
     switch(select){
     case 1:
+      printf("请输入要插入的数据,以-1结束>\n");
+      while(scanf("%d",&item),item != -1){
+	push_back(&list, item);	
+      }
+      show_list(&list);
       break;
     case 2:
+      printf("请输入要插入的数据,以-1结束>\n");
+      while(scanf("%d",&item),item != -1){
+	push_front(&list, item);	
+      }
+      show_list(&list);
+      break;
+    case 3:
+      show_list(&list);
+      break;
+    case 4:
+      pop_back(&list);
+      show_list(&list);
+      break;
+    case 5:
+      pop_front(&list);
+      show_list(&list);
+      break;
+    default:
+      printf("输入的选择错误，请重新选择\n");
       break;
     }
   }
