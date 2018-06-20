@@ -13,9 +13,9 @@ int main(){
     printf("*** [5]   pop_front   [6]  insert_pos ***\n");
     printf("*** [7]   find        [8]  length     ***\n");
     printf("*** [9]   delete_pos  [10] delete_val ***\n");
-    printf("*** [11]  sort        [12] resver     ***\n");
+    printf("*** [11]  sort1       [12] resver     ***\n");
     printf("*** [13]  clear       [14] destroy    ***\n");
-    printf("*** [0]   quit                        ***\n");
+    printf("*** [0]   quit        [15] sort2      ***\n");
     printf("*****************************************\n");
     printf("请选择:>");
     scanf("%d", &select);
@@ -80,6 +80,10 @@ int main(){
       printf("please enter the value what you shoule delete>\n");
       scanf("%d", &item);
       delete_val(&list, item);
+      show_list(&list);
+      break;
+    case 11:
+      sort1(&list);
       show_list(&list);
       break;
     default:

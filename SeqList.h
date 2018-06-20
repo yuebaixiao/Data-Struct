@@ -26,4 +26,6 @@ int find(SeqList*, ElemType);
 int length(SeqList*);
 void delete_pos(SeqList*, int);
 void delete_val(SeqList*, int);
+void sort1(SeqList*);
+void sort2(SeqList*);
 #endif

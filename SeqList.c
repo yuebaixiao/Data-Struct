@@ -83,6 +83,20 @@ void delete_val(SeqList* seq, int value){
   delete_pos(seq, pos);
   
 }
+void sort1(SeqList* seq){
+  for(int i = 0; i < seq->size-1; ++i){
+    for(int j = 0; j < seq->size-i-1; ++j){
+      if(seq->base[j] > seq->base[j+1]){
+	ElemType tmp = seq->base[j];
+	seq->base[j] = seq->base[j+1];
+	seq->base[j+1] = tmp;
+      }
+    }
+  }
+}
+void sort2(SeqList* seq){
+
+}
 void show_list(SeqList* seq){
   for(int i = 0; i < seq->size; ++i){
     printf("%d ", seq->base[i]);
