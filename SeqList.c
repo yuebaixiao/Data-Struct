@@ -52,7 +52,36 @@ void insert_pos(SeqList* seq, ElemType x, int index){
   seq->size++;
 }
 int find(SeqList* seq, ElemType x){
-
+  for(int i = 0; i < seq->size; ++i){
+    if(x == seq->base[i]){
+      return i;
+    }
+  }
+  return -1;
+}
+int length(SeqList* seq){
+  return seq->size;
+}
+void delete_pos(SeqList* seq, int index){
+  if(seq->size <= 0){
+    printf("线性表以空\n");
+    return;
+  }
+  if(index < 0 || index > seq->size - 1){
+    printf("given index is error\n");
+    return;
+  }
+  memmove(seq->base+index,seq->base+index+1,(seq->size-index-1)*sizeof(ElemType));
+  seq->size--;
+}
+void delete_val(SeqList* seq, int value){
+  int pos = find(seq, value);
+  if(pos == -1){
+    printf("The enter value is not exist");
+    return;
+  }
+  delete_pos(seq, pos);
+  
 }
 void show_list(SeqList* seq){
   for(int i = 0; i < seq->size; ++i){

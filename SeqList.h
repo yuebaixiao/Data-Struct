@@ -23,4 +23,7 @@ void pop_back(SeqList*);
 void pop_front(SeqList*);
 void insert_pos(SeqList*, ElemType, int);
 int find(SeqList*, ElemType);
+int length(SeqList*);
+void delete_pos(SeqList*, int);
+void delete_val(SeqList*, int);
 #endif

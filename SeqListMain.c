@@ -56,14 +56,30 @@ int main(){
       show_list(&list);
       break;
     case 7:
-      printf("请输入要插入的数据>\n");
+      printf("please enter what you shoule find out>\n");
       scanf("%d",&item);
       index = find(&list, item);
-      if(index = -1){
+      if(index == -1){
 	printf("can not find %d \n", item);
       }else{
-	printf("find %d at position %d", item, index);
+	printf("find %d at position %d\n", item, index);
       }
+      show_list(&list);
+      break;
+    case 8:
+      printf("length is %d\n", length(&list));
+      show_list(&list);
+      break;
+    case 9:
+      printf("please enter the index that you shoule delete>\n");
+      scanf("%d", &index);
+      delete_pos(&list, index);
+      show_list(&list);
+      break;
+    case 10:
+      printf("please enter the value what you shoule delete>\n");
+      scanf("%d", &item);
+      delete_val(&list, item);
       show_list(&list);
       break;
     default:
