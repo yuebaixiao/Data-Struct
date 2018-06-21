@@ -7,5 +7,18 @@
 #include <memory.h>
 #include <stdbool.h>
 
+#define ElemType int
 
+typedef struct Node{
+  ElemType data;
+  struct Node* next;
+}Node;
+
+typedef struct NodeList{
+  Node*  first;
+  Node*  last;
+  size_t size;
+}NodeList;
+
+void init(NodeList*);
 #endif
