@@ -37,6 +37,15 @@ int main(){
       break;
     case 3:
       show_list(&list);
+      break;
+    case 4:
+      pop_back(&list);
+      show_list(&list);
+      break;
+    case 5:
+      pop_front(&list);
+      show_list(&list);
+      break;
     }
   }
 }

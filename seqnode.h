@@ -23,5 +23,7 @@ typedef struct NodeList{
 void init(NodeList*);
 void push_back(NodeList*, ElemType);
 void push_front(NodeList*, ElemType);
+void pop_back(NodeList*);
+void pop_front(NodeList*);
 void show_list(NodeList*);
 #endif

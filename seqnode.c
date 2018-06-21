@@ -43,3 +43,22 @@ void show_list(NodeList* list){
   }
   printf("NULL\n");
 }
+
+void pop_back(NodeList* list){
+  if(list->size == 0)return;
+  Node* p = list->first->next;
+  while(p->next != list->last){
+    p = p->next;
+  }
+  p->next = NULL;
+  free(list->last);
+  list->last = p;
+  list->size--;
+}
+void pop_front(NodeList* list){
+  if(list->size == 0)return;
+  Node* p = list->first->next;
+  list->first->next = list->first->next->next;
+  list->size--;
+  free(p);
+}
