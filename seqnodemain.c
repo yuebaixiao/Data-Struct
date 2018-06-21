@@ -26,6 +26,17 @@ int main(){
       while(scanf("%d",&item) && item != -1){
 	push_back(&list, item);
       }
+      show_list(&list);
+      break;
+    case 2:
+      printf("请输入要插入的数据,以-1结束>\n");
+      while(scanf("%d", &item) && item != -1){
+	push_front(&list, item);
+      }
+      show_list(&list);
+      break;
+    case 3:
+      show_list(&list);
     }
   }
 }
