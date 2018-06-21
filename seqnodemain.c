@@ -1,9 +1,10 @@
 #include "seqnode.h"
 
 int main(){
-  NodeList* list;
-  init(list);
+  NodeList list;
+  init(&list);
   int select = 1;
+  ElemType item;
   while(select){
     printf("*****************************************\n");
     printf("*** [1]   push_back   [2]  push_front ***\n");
@@ -19,7 +20,12 @@ int main(){
     scanf("%d", &select);
     if(0 == select)
       break;
-    switch(select){}
-
+    switch(select){
+    case 1:
+      printf("请输入要插入的数据,以-1结束>\n");
+      while(scanf("%d",&item) && item != -1){
+	push_back(&list, item);
+      }
+    }
   }
 }
