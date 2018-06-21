@@ -31,6 +31,7 @@ listnode* create1(listnode* tail, size_t size){
   listnode* head;
   for(int i = 0; i < size; ++i){
     listnode* p = (listnode*)malloc(sizeof(listnode));
+    assert(NULL != p);
     if(i == size - 1){
       head = p;
     }
