@@ -9,29 +9,31 @@ void init(NodeList* list){
 
 void push_back(NodeList* list, ElemType val){
   Node* p = (Node*)malloc(sizeof(Node));
+  assert(NULL != p);
+  p->data = val;
+  p->next = NULL;
+  /*
   if(list->first->next == NULL){
     list->first->next = p;
     list->last = p;
-    list->last->data = val;
-    list->last->next = NULL;
     list->size++;
     return;
   }
-  Node* p1 = list->last;
-  list->last = p;
-  p1->next = p;
+  */
 
-  list->last->data = val;
-  list->last->next = NULL;
+  list->last->next = p;
+  list->last = p;
   list->size++;
 }
 
 void push_front(NodeList* list, ElemType val){
   Node* p = (Node*)malloc(sizeof(Node));
+  p->data = val;
   p->next = list->first->next;
   list->first->next = p;
-  list->last = p;
-  list->last->data = val;
+  if(list->size == 0){
+    list->last = p;
+  }
   list->size++;
 }
 
@@ -46,7 +48,7 @@ void show_list(NodeList* list){
 
 void pop_back(NodeList* list){
   if(list->size == 0)return;
-  Node* p = list->first->next;
+  Node* p = list->first;
   while(p->next != list->last){
     p = p->next;
   }
@@ -58,7 +60,10 @@ void pop_back(NodeList* list){
 void pop_front(NodeList* list){
   if(list->size == 0)return;
   Node* p = list->first->next;
-  list->first->next = list->first->next->next;
+  list->first->next = p->next;
+  if(list->size == 1){
+    list->last = list->first;
+  }
   list->size--;
   free(p);
 }
