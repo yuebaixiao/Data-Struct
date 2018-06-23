@@ -190,3 +190,33 @@ void sort1(NodeList* list){
     n = t;
   }
 }
+void push_back_pnt(NodeList* list, Node* node){
+  list->last->next = node;
+  list->last = node;
+  list->last->next = NULL;
+  list->size++;
+}
+void resver(NodeList* list){
+  if(list->size == 0 || list->size == 1)return;
+
+  Node* e = list->last;
+  Node* b = list->first->next;
+  Node* tmp = list->first;
+  size_t sz = list->size;
+
+  list->last = list->first;
+  list->size = 0;
+
+  while(sz-- > 0){
+    while(tmp->next != e && b != e){
+      tmp = tmp->next;
+    }
+    if(b == e){
+      push_back_pnt(list, b);
+    }else{
+      push_back_pnt(list, tmp->next);
+    }
+    e   = tmp;
+    tmp = b;
+  }
+}

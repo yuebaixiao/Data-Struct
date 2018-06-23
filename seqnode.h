@@ -31,5 +31,6 @@ Node* find(NodeList*, ElemType);
 void delete_val(NodeList*, ElemType);
 void sort(NodeList*);
 void sort1(NodeList*);
+void resver(NodeList*);
 
 #endif

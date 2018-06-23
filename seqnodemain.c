@@ -12,9 +12,9 @@ int main(){
     printf("*** [3]   show_list   [4]  pop_back   ***\n");
     printf("*** [5]   pop_front   [6]  insert_val ***\n");
     printf("*** [7]   find        [8]  length     ***\n");
-    printf("*** [9]   delete_val  [10] sort       ***\n");
-    printf("*** [11]  sort1       [12] resver     ***\n");
-    printf("*** [13]  clear       [14*] destroy   ***\n");
+    printf("*** [9]   delete_val  [10] sort by val***\n");
+    printf("*** [11]  sort by node[12] resver     ***\n");
+    printf("*** [13]  clear       [14*]destroy   ***\n");
     printf("*** [0]   quit                        ***\n");
     printf("*****************************************\n");
     printf("请选择:>");
@@ -71,9 +71,14 @@ int main(){
       break;
     case 10:
       sort(&list);
-      show_list(&list);break;
+      show_list(&list);
+      break;
     case 11:
       sort1(&list);
+      show_list(&list);
+      break;
+    case 12:
+      resver(&list);
       show_list(&list);
       break;
     default:
