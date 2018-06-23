@@ -32,5 +32,9 @@ void delete_val(NodeList*, ElemType);
 void sort(NodeList*);
 void sort1(NodeList*);
 void resver(NodeList*);
+void resver1(NodeList*);
+void resver2(NodeList*);
+void clear(NodeList*);
+void destroy(NodeList*);
 
 #endif

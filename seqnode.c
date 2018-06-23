@@ -12,14 +12,6 @@ void push_back(NodeList* list, ElemType val){
   assert(NULL != p);
   p->data = val;
   p->next = NULL;
-  /*
-  if(list->first->next == NULL){
-    list->first->next = p;
-    list->last = p;
-    list->size++;
-    return;
-  }
-  */
 
   list->last->next = p;
   list->last = p;
@@ -218,5 +210,66 @@ void resver(NodeList* list){
     }
     e   = tmp;
     tmp = b;
+  }
+}
+
+void push_front_pnt(NodeList* list, Node* node){
+  node->next = list->first->next;
+  list->first->next = node;
+  list->size++;
+}
+void resver1(NodeList* list){
+  if(list->size == 0 || list->size == 1)return;
+
+  Node* head = list->first->next->next;
+
+  list->last = list->first->next;
+  list->last->next = NULL;
+  list->size = 1;
+
+  Node* tmp;
+  while(head != NULL){
+    tmp = head->next;
+    push_front_pnt(list, head);
+    head = tmp;
+  }
+}
+void resver2(NodeList* list){
+  if(list->size == 0 || list->size == 1)return;
+
+  Node* p = list->first->next->next;
+  list->last = list->first->next;
+  list->last->next = NULL;
+
+  Node* q;
+  while(p != NULL){
+    q = p->next;
+    p->next = list->first->next;
+    list->first->next = p;
+    p = q;
+  }
+}
+
+void clear(NodeList* list){
+  if(list->size == 0) return;
+  Node* b = list->first->next;
+  Node* q;
+  while(b != NULL){
+    q = b->next;
+    free(b);
+    b = q;
+  }
+  list->last = list->first;
+  list->last->next = NULL;
+  list->size = 0;
+}
+
+void destroy(NodeList* list){
+  Node* b = list->first;
+  Node* q;
+  while(b != NULL){
+    q = b->next;
+    free(b);
+    b = q;
   }
 }

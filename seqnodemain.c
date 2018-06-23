@@ -13,9 +13,9 @@ int main(){
     printf("*** [5]   pop_front   [6]  insert_val ***\n");
     printf("*** [7]   find        [8]  length     ***\n");
     printf("*** [9]   delete_val  [10] sort by val***\n");
-    printf("*** [11]  sort by node[12] resver     ***\n");
-    printf("*** [13]  clear       [14*]destroy   ***\n");
-    printf("*** [0]   quit                        ***\n");
+    printf("*** [11]  sort by node[12] resver back***\n");
+    printf("*** [13]  resver front[14] clear      ***\n");
+    printf("*** [0]   quit        [15*]destroy    ***\n");
     printf("*****************************************\n");
     printf("请选择:>");
     scanf("%d", &select);
@@ -63,6 +63,7 @@ int main(){
       break;
     case 8:
       printf("length is %ld\n", list.size);
+      break;
     case 9:
       printf("please enter what you want to delete>\n");
       scanf("%d",&item);      
@@ -81,8 +82,21 @@ int main(){
       resver(&list);
       show_list(&list);
       break;
+    case 13:
+      resver2(&list);
+      show_list(&list);
+      break;
+    case 14:
+      clear(&list);
+      show_list(&list);
+      break;
+      //case 15:
+      //destroy(&list);
+      break;
     default:
       break;
     }
   }
+
+  destroy(&list);
 }
