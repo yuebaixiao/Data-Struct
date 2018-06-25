@@ -24,12 +24,13 @@ void push_back(NodeList* list, ElemType val){
 }
 
 void push_front(NodeList* list, ElemType val){
-  Node* p = (Node*)malloc(sizeof(Node));
-  p->data = val;
+  Node* p = create_node(val);
+
   p->next = list->first->next;
   list->first->next = p;
   if(list->size == 0){
     list->last = p;
+    list->last->next = list->first;
   }
   list->size++;
 }
@@ -49,7 +50,7 @@ void pop_back(NodeList* list){
   while(p->next != list->last){
     p = p->next;
   }
-  p->next = NULL;
+  p->next = list->first;
   free(list->last);
   list->last = p;
   list->size--;
