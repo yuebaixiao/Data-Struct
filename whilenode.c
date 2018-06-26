@@ -119,35 +119,36 @@ void delete_val(NodeList* list, ElemType val){
   if(p->next == list->last){
     list->last = p;
   }
-  free(p->next);
+  Node* tmp = p->next;
   p->next = p->next->next;
+  free(tmp);
+  list->size--;
 }
 
 void sort(NodeList* list){
   if(list->size == 0 || list->size == 1)return;
 
-  Node* p = list->first->next->next;
-  Node* e = list->last;
-  e->next = list->first;
+  Node* p = list->first->next;
 
-  Node* t = list->first;
-  list->last = list->first->next;
+  Node* t = list->last = list->first;
   list->last->next = list->first;
 
-  while(list->size-- > 1){
-    while(p != e && p->data > t->next->data){
+  size_t s = list->size;
+
+  while(s-- > 0){
+    while(p->data > t->next->data && t->next != list->first){
       t = t->next;
     }
-    if(p->next == list->first){
+    if(t->next == list->first){
       list->last = p;
-      list->last->next = list->first;
     }
 
-    Node* tmp = p;
-    tmp->next = t->next;
-    t->next = tmp;
+    Node* tmp = p->next;
+    p->next = t->next;
+    t->next = p;
 
-    p = p->next;
+    p = tmp;
+    t = list->first;
   }
   list->last->next = list->first;
 }
