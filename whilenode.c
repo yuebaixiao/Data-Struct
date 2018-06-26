@@ -126,16 +126,16 @@ void delete_val(NodeList* list, ElemType val){
 void sort(NodeList* list){
   if(list->size == 0 || list->size == 1)return;
 
-  Node* p = list->first->next;
+  Node* p = list->first->next->next;
   Node* e = list->last;
   e->next = list->first;
 
   Node* t = list->first;
-  list->last = t;
-  t->next = list->first;
+  list->last = list->first->next;
+  list->last->next = list->first;
 
   while(list->size-- > 1){
-    while(p->next != list->first && p->data > t->next->data){
+    while(p != e && p->data > t->next->data){
       t = t->next;
     }
     if(p->next == list->first){

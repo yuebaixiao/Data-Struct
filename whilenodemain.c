@@ -12,8 +12,8 @@ int main(){
     printf("*** [3]   show_list   [4]  pop_back   ***\n");
     printf("*** [5]   pop_front   [6]  insert_val ***\n");
     printf("*** [7]   find        [8]  length     ***\n");
-    printf("*** [9]   delete_val  [10] sort by val***\n");
-    printf("*** [11]  sort by node[12] resver back***\n");
+    printf("*** [9]   delete_val  [10] sort       ***\n");
+    printf("*** [11]  sort        [12] resver back***\n");
     printf("*** [13]  resver front[14] clear      ***\n");
     printf("*** [0]   quit        [15*]destroy    ***\n");
     printf("*****************************************\n");
