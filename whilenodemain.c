@@ -13,8 +13,8 @@ int main(){
     printf("*** [5]   pop_front   [6]  insert_val ***\n");
     printf("*** [7]   find        [8]  length     ***\n");
     printf("*** [9]   delete_val  [10] sort       ***\n");
-    printf("*** [11]  sort        [12] resver back***\n");
-    printf("*** [13]  resver front[14] clear      ***\n");
+    printf("*** [11]  sort        [12] resver     ***\n");
+    printf("*** [13]              [14] clear      ***\n");
     printf("*** [0]   quit        [15*]destroy    ***\n");
     printf("*****************************************\n");
     printf("请选择:>");
@@ -83,20 +83,20 @@ int main(){
       show_list(&list);
       break;
     case 13:
-      resver2(&list);
+      resver(&list);
       show_list(&list);
       break;
     case 14:
       clear(&list);
       show_list(&list);
       break;
-      //case 15:
-      //destroy(&list);
+    case 15:
+      destroy(&list);
       break;
     default:
       break;
     }
   }
 
-  //  destroy(&list);
+  destroy(&list);
 }

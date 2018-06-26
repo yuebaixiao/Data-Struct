@@ -152,92 +152,44 @@ void sort(NodeList* list){
   }
   list->last->next = list->first;
 }
-void push_back_pnt(NodeList* list, Node* node){
-  list->last->next = node;
-  list->last = node;
-  list->last->next = NULL;
-  list->size++;
-}
 void resver(NodeList* list){
   if(list->size == 0 || list->size == 1)return;
 
-  Node* e = list->last;
-  Node* b = list->first->next;
-  Node* tmp = list->first;
-  size_t sz = list->size;
+  Node* head = list->first->next;
+  Node* end = head;
 
   list->last = list->first;
-  list->size = 0;
-
-  while(sz-- > 0){
-    while(tmp->next != e && b != e){
-      tmp = tmp->next;
-    }
-    if(b == e){
-      push_back_pnt(list, b);
-    }else{
-      push_back_pnt(list, tmp->next);
-    }
-    e   = tmp;
-    tmp = b;
-  }
-}
-
-void push_front_pnt(NodeList* list, Node* node){
-  node->next = list->first->next;
-  list->first->next = node;
-  list->size++;
-}
-void resver1(NodeList* list){
-  if(list->size == 0 || list->size == 1)return;
-
-  Node* head = list->first->next->next;
-
-  list->last = list->first->next;
-  list->last->next = NULL;
-  list->size = 1;
-
-  Node* tmp;
-  while(head != NULL){
-    tmp = head->next;
-    push_front_pnt(list, head);
+  list->last->next = list->first;
+  
+  while(head != list->first){
+    Node* tmp = head->next;
+  
+    head->next = list->first->next;
+    list->first->next = head;
+    
     head = tmp;
   }
-}
-void resver2(NodeList* list){
-  if(list->size == 0 || list->size == 1)return;
-
-  Node* p = list->first->next->next;
-  list->last = list->first->next;
-  list->last->next = NULL;
-
-  Node* q;
-  while(p != NULL){
-    q = p->next;
-    p->next = list->first->next;
-    list->first->next = p;
-    p = q;
-  }
+  list->last = end;
 }
 
 void clear(NodeList* list){
   if(list->size == 0) return;
   Node* b = list->first->next;
   Node* q;
-  while(b != NULL){
+  while(b != list->first){
     q = b->next;
     free(b);
     b = q;
   }
   list->last = list->first;
-  list->last->next = NULL;
+  list->last->next = list->first;
   list->size = 0;
 }
 
 void destroy(NodeList* list){
   Node* b = list->first;
   Node* q;
-  while(b != NULL){
+  while(b != list->first){
     q = b->next;
     free(b);
     b = q;
