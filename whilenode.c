@@ -70,24 +70,18 @@ void insert_val(NodeList* list, ElemType val){
     push_back(list, val);
     return;
   }
-  Node* p = (Node*)malloc(sizeof(Node));
-  p->data = val;
+  Node* p = create_node(val);
+
   Node* t = list->first;
-  do{
-    if(val >= t->data && t->next != NULL && val <= t->next->data){
-      p->next = t->next;
-      t->next = p;
-      break;
-    }
-    if(t->next == NULL){
-      list->last->next = p;
-      list->last = p;
-      list->last->next = NULL;
-      break;
-    }
+  while(t->next != list->first && val > t->next->data){
     t = t->next;
   }
-  while(1);
+  if(t->next == list->first){
+    list->last = p;
+  }
+  p->next = t->next;
+  t->next = p;
+  
   list->size++;
 }
 Node* find(NodeList* list, ElemType val){
@@ -98,95 +92,64 @@ Node* find(NodeList* list, ElemType val){
   do{
     if(val == p->data){
       return p;
-      break;
     }
     p = p->next;
   }
-  while(NULL != p);
+  while(list->first != p);
+  return NULL;
 }
-void delete_val(NodeList* list, ElemType val){
-  if(0 == list->size)return;
+Node* find1(NodeList* list, ElemType val){
+  if(0 == list->size){
+    return NULL;
+  }
   Node* p = list->first;
   do{
     if(p->next->data == val){
-      if(NULL == p->next->next){
-	list->last = p;
-      }
-      free(p->next);
-      p->next = p->next->next;
-      list->size--;
-      break;
+      return p;
     }
     p = p->next;
-  }while(NULL != p->next);
+  }while(list->first != p);
+  return NULL;
 }
-void delete_val1(NodeList* list, ElemType val){
+void delete_val(NodeList* list, ElemType val){
   if(0 == list->size)return;
-  Node* p = find(list, val);
+ 
+  Node* p = find1(list, val);
   if(NULL == p)return;
-  if(p == list->last){
-    pop_back(list);
+  if(p->next == list->last){
+    list->last = p;
   }
-  else{
-    p->data = p->next->data;
-    free(p->next);
-    p->next = p->next->next;
-    if(NULL == p->next){
-      list->last = p;
-    }
-    list->size--;
-  }
+  free(p->next);
+  p->next = p->next->next;
 }
+
 void sort(NodeList* list){
   if(list->size == 0 || list->size == 1)return;
+
   Node* p = list->first->next;
-  for(int i = 0; i < list->size-1; ++i){
-    for(int j = 0; j < list->size-i-1; ++j){
-      if(p->data > p->next->data){
-	p->data = p->data + p->next->data;
-	p->next->data = p->data - p->next->data;
-	p->data = p->data - p->next->data;
-      }
-      p = p->next;
-    }
-    p = list->first->next;
-  }
-}
+  Node* e = list->last;
+  e->next = list->first;
 
-void insert_pnt(NodeList* list, Node* node){
   Node* t = list->first;
-  do{
-    if(t->next != NULL && node->data <= t->next->data){
-      node->next = t->next;
-      t->next = node;
-      break;
+  list->last = t;
+  t->next = list->first;
+
+  while(list->size-- > 1){
+    while(p->next != list->first && p->data > t->next->data){
+      t = t->next;
     }
-    if(t->next == NULL){
-      list->last->next = node;
-      list->last = node;
-      list->last->next = NULL;
-      break;
+    if(p->next == list->first){
+      list->last = p;
+      list->last->next = list->first;
     }
-    t = t->next;
+
+    Node* tmp = p;
+    tmp->next = t->next;
+    t->next = tmp;
+
+    p = p->next;
   }
-  while(1);
-  list->size++;
-}
-void sort1(NodeList* list){
-  if(list->size == 0 || list->size == 1)return;
-
-  Node* n = list->first->next->next;
-
-  list->size = 1;
-  list->last = list->first->next;
-  list->last->next = NULL;
-
-  Node* t;
-  while(NULL != n){
-    t = n->next;
-    insert_pnt(list, n);
-    n = t;
-  }
+  list->last->next = list->first;
 }
 void push_back_pnt(NodeList* list, Node* node){
   list->last->next = node;

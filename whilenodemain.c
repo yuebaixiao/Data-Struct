@@ -71,11 +71,11 @@ int main(){
       show_list(&list);
       break;
     case 10:
-      sort(&list);
-      show_list(&list);
+      // sort(&list);
+      //show_list(&list);
       break;
     case 11:
-      sort1(&list);
+      sort(&list);
       show_list(&list);
       break;
     case 12:
