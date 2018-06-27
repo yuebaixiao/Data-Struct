@@ -1,5 +1,5 @@
-#ifndef __SEQNODE__
-#define __SEQNODE__
+#ifndef __SHUANGNODE__
+#define __SHUANGNODE__
 
 #include <stdio.h>
 #include <malloc.h>
@@ -11,6 +11,7 @@
 
 typedef struct Node{
   ElemType data;
+  struct Node* before;
   struct Node* next;
 }Node;
 

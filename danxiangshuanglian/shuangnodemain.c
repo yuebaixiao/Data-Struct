@@ -1,4 +1,4 @@
-#include "seqnode.h"
+#include "shuangnode.h"
 
 int main(){
   NodeList list;
@@ -98,5 +98,5 @@ int main(){
     }
   }
 
-  destroy(&list);
+  //destroy(&list);
 }
