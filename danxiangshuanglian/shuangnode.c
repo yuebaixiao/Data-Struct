@@ -161,7 +161,44 @@ void delete_val(NodeList* list, ElemType val){
 }
 
 void sort(NodeList* list){
+  if(list->size == 1 || list->size == 0)return;
+
+  //p为第一个节点
+  Node* p = list->first->next;
+
+  //ｔ是空白list，往t里加节点
+  Node* t = list->first;
+  list->last = list->first;
+  list->last->next = NULL;
   
+  size_t sz = list->size;
+  
+  Node* tmp;
+  
+  while(sz-- > 0){
+    //p的next会被改变，所以提前保存
+    tmp = p->next;
+    while(t->next != NULL && p->data > t->next->data){
+      t = t->next;
+    }
+    //ｔ为first，或者t为last,都是尾插
+    if(t->next == NULL){
+      t->next = p;
+      p->next = NULL;
+      p->before = t;
+      list->last = p;
+    }
+    else{
+      p->next = t->next;
+      t->next->before = p;
+
+      t->next = p;
+      p->before = t;
+    }
+
+    p = tmp;
+    t = list->first;
+  }
 }
 
 void resver(NodeList* list){
