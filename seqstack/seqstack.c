@@ -4,7 +4,6 @@ bool reInit(seqstack* seq){
   ElemType* new = (ElemType*)realloc(seq->base, ADD_SIZE *sizeof(ElemType));
   if(NULL == new)return true;
   if(seq->base != new){
-    memmove(new, seq->base, seq->size * sizeof(ElemType));
     seq->base = new;
     seq->top = seq->base + seq->size + 1;
   }
