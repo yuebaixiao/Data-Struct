@@ -8,28 +8,21 @@
 #include <stdbool.h>
 
 #define SEQSTACK_INIT_SIZE 8
+#define ADD_SIZE 1000
+
 typedef int ElemType;
 
-typedef struct SeqList{
+typedef struct seqstack{
   int size;
   ElemType *base;
   ElemType *top;
-}SeqList;
+}seqstack;
 
-void init(SeqList*);
-void push_back(SeqList*, ElemType);
-void show_list(SeqList*);
-void push_front(SeqList*, ElemType);
-void pop_back(SeqList*);
-void pop_front(SeqList*);
-void insert_pos(SeqList*, ElemType, int);
-int find(SeqList*, ElemType);
-int length(SeqList*);
-void delete_pos(SeqList*, int);
-void delete_val(SeqList*, int);
-void sort1(SeqList*);
-void sort2(SeqList*);
-void resver(SeqList*);
-void clear(SeqList*);
-void destroy(SeqList*);
+void init(seqstack*);
+void push(seqstack*, ElemType);
+void show_list(seqstack*);
+void pop(seqstack*);
+int length(seqstack*);
+void clear(seqstack*);
+void destroy(seqstack*);
 #endif
