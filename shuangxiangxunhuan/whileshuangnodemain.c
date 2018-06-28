@@ -1,4 +1,4 @@
-#include "shuangnode.h"
+#include "whileshuangnode.h"
 
 int main(){
   NodeList list;

@@ -1,9 +1,10 @@
-#include "shuangnode.h"
+#include "whileshuangnode.h"
 
 void init(NodeList* list){
   list->first = (Node*)malloc(sizeof(Node));
   list->last = list->first;
-  list->last->next = NULL;
+  list->first->before = list->last;
+  list->last->next = list->first;
   list->size = 0;
 }
 
@@ -19,9 +20,11 @@ void push_back(NodeList* list, ElemType val){
   Node* p = create_node(val);
 
   p->before = list->last;
-  p->next = NULL;
+  p->next = list->first;
   
+  list->first->before = p;
   list->last->next = p;
+
   list->last = p;
   
   list->size++;
@@ -32,13 +35,16 @@ void push_front(NodeList* list, ElemType val){
 
   //设置p的before和next
   p->before = list->first;
-  p->next = list->first->next;
-  //第一次添加节点的时候要移动未指针
-  if(NULL == list->first->next){
+  
+  //第一次添加节点的时候要移动未指针,还要设置first的before
+  if(list->first == list->first->next){
     list->last = p;
+    p->next = list->first;
+    list->first->before = p;
   }
   //不是第一次添加节点的时候，要把原第一个节点的before指向，新添加的节点
   else{
+    p->next = list->first->next;
     list->first->next->before = p;
   }
   //设置头指针的next节点
@@ -49,7 +55,7 @@ void push_front(NodeList* list, ElemType val){
 
 void show_list(NodeList* list){
   Node* tmp = list->first->next;
-  while(tmp != NULL){
+  while(tmp != list->first){
     printf("%d->", tmp->data);
     tmp = tmp->next;
   }
@@ -61,7 +67,9 @@ void pop_back(NodeList* list){
   
   free(list->last);
   //让尾指针的next指向NULL
-  list->last->before->next = NULL;
+  list->last->before->next = list->first;
+  //让first的before指向新的尾节点
+  list->first->before = list->last->before;
   //让尾指针指向原尾节点的前一个节点
   list->last = list->last->before;
 
@@ -71,10 +79,11 @@ void pop_front(NodeList* list){
   if(list->size == 0)return;
 
   free(list->first->next);
-  //就剩一个节点的时候，要移动尾指针。因为list->first->next已经为NULL，下面的list->first->next->before就会在执行时候崩掉，所以要return掉
+  //就剩一个节点的时候，要移动尾指针。
   if(list->first->next == list->last){
     list->last = list->first;
-    list->last->next = NULL;
+    list->last->next = list->first;
+    list->first->before = list->last;
     list->size--;
     return;
   }
@@ -90,14 +99,15 @@ void insert_val(NodeList* list, ElemType val){
   Node* n = create_node(val);;
   
   Node* p = list->first;
-  while(p->next != NULL && val > p->next->data){
+  while(p->next != list->first && val > p->next->data){
     p = p->next;
   }
-  //第一次加节点，或者，最后一个节点也没有给的值大的时候
-  if(NULL == p->next){
-    n->next = NULL;
+  //第一次加节点，或者，最后一个节点的值也没有比给的值大的时候
+  if(list->first == p->next){
+    n->next = list->first;
     n->before = list->last;
     list->last->next = n;
+    list->first->before = n;
     list->last = n;
     list->size++;
     return;
@@ -118,44 +128,32 @@ Node* find(NodeList* list, ElemType val){
   if(list->size == 0)return NULL;
 
   Node* p = list->first;
-  while(p->next != NULL && p->next->data != val){
+  while(p->next != list->first && p->next->data != val){
     p = p->next;
   }
-  if(NULL == p->next){
+  if(list->first == p->next){
     return NULL;
   }
   printf("%d is found\n", p->next->data);
   return p->next;
 }
-//寻找给定值的节点的前一个节点的位置
-Node* find1(NodeList* list, ElemType val){
-  if(list->size == 0)return NULL;
-
-  Node* p = list->first;
-  while(p->next != NULL && p->next->data != val){
-    p = p->next;
-  }
-  if(NULL == p->next){
-    return NULL;
-  }
-  printf("%d is found\n", p->next->data);
-  return p;
-}
 void delete_val(NodeList* list, ElemType val){
-  Node* p = find1(list, val);
+  Node* p = find(list, val);
   if(NULL == p) return;
 
-  free(p->next);
   //删除的节点是尾节点的时候，要移动last
-  if(p->next == list->last){
-    list->last = p;
-    p->next = NULL;
+  if(p == list->last){
+    list->last = p->before;
+    p->before->next = list->first;
+    list->first->before = p->before;
     list->size--;
     return;
   }
 
-  p->next->next->before = p;
-  p->next = p->next->next;
+  p->before->next = p->next;
+  p->next->before = p->before;
+
+  free(p);
 
   list->size--;
 }
@@ -169,7 +167,8 @@ void sort(NodeList* list){
   //ｔ是空白list，往t里加节点
   Node* t = list->first;
   list->last = list->first;
-  list->last->next = NULL;
+  list->last->next = list->first;
+  list->first->before = list->last;
   
   size_t sz = list->size;
   
@@ -178,14 +177,15 @@ void sort(NodeList* list){
   while(sz-- > 0){
     //p的next会被改变，所以提前保存
     tmp = p->next;
-    while(t->next != NULL && p->data > t->next->data){
+    while(t->next != list->first && p->data > t->next->data){
       t = t->next;
     }
     //ｔ为first，或者t为last,都是尾插
-    if(t->next == NULL){
+    if(t->next == list->first){
       t->next = p;
-      p->next = NULL;
+      p->next = list->first;
       p->before = t;
+      list->first->before = p;
       list->last = p;
     }
     else{
@@ -210,15 +210,17 @@ void resver(NodeList* list){
   Node* second = head->next;
   //head就是last，所以要head->next = NULL;
   list->last = head;
-  list->last->next = NULL;
+  list->last->next = list->first;
+  list->first->before = list->last;
 
   Node* tmp;
-  while(second != NULL){
+  while(second != list->first){
     //必须保存second的next，因为下面的代码，会改变second的next
     tmp = second->next;
+
+    //头插
     second->next = list->first->next;
     list->first->next->before = second;
-
     list->first->next = second;
     second->before = list->first;
     
@@ -228,20 +230,17 @@ void resver(NodeList* list){
 
 void clear(NodeList* list){
   Node* p = list->first->next;
-  while(p != NULL){
-    free(p);
+  while(p != list->last){
     p = p->next;
+    free(p);    
   }
   list->last = list->first;
-  list->last->next = NULL;
+  list->last->next = list->first;
+  list->first->before = list->last;
   list->size = 0;
 }
 
 void destroy(NodeList* list){
-  Node* p = list->first;
-  while(p != NULL){
-    free(p);
-    p = p->next;
-  }
-  list->size = 0;  
+  clear(list);
+  free(list->first);
 }

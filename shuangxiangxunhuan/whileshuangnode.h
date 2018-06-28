@@ -1,5 +1,5 @@
-#ifndef __SHUANGNODE__
-#define __SHUANGNODE__
+#ifndef __WHILESHUANGNODE__
+#define __WHILESHUANGNODE__
 
 #include <stdio.h>
 #include <malloc.h>
