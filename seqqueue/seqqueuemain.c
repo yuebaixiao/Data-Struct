@@ -1,7 +1,7 @@
-#include "seqstack.h"
+#include "seqqueue.h"
 
 int main(){
-  seqstack list;
+  seqqueue list;
   init(&list);
   int select = 1;
   ElemType item;
@@ -21,18 +21,14 @@ int main(){
     case 1:
       printf("请输入要插入的数据>\n");
       scanf("%d",&item);
-      push(&list, item);	
+      enQueue(&list, item);	
       show_list(&list);
       break;
     case 2:
-      pop(&list);	
+      deQueue(&list);	
       show_list(&list);
       break;
     case 3:
-      show_list(&list);
-      break;
-    case 4:
-      printf("length is %d\n", length(&list));
       show_list(&list);
       break;
     case 5:
@@ -47,5 +43,5 @@ int main(){
       break;
     }
   }
-  destroy(&list);
+  //destroy(&list);
 }

@@ -1,45 +1,30 @@
-#include "seqstack.h"
+#include "seqqueue.h"
 
-bool reInit(seqstack* seq){
-  ElemType* new = (ElemType*)realloc(seq->base, ADD_SIZE *sizeof(ElemType));
-  if(NULL == new)return true;
-  if(seq->base != new){
-    seq->base = new;
-    seq->top = seq->base + seq->size + 1;
-  }
-  return false;
+void init(seqqueue* seq){
+  seq->base = (ElemType*)malloc(sizeof(ElemType) * SEQQUEUE_INIT_SIZE);
+  seq->front = seq->tail = 0;
 }
-void init(seqstack* seq){
-  ElemType* e = (ElemType*)malloc(sizeof(ElemType) * SEQSTACK_INIT_SIZE);
-  seq->base = seq->top = e;
-  seq->size = 0;
-}
-void push(seqstack* seq, ElemType x){
-  if(seq->size >= SEQSTACK_INIT_SIZE && reInit(seq)){
-    printf("stack is full\n");
+void enQueue(seqqueue* seq, ElemType x){
+  if(seq->tail == SEQQUEUE_INIT_SIZE -1){
+    printf("queue is full\n");
     return;
   }
-  //先赋值，后移动top的指向
-  *((seq->top)++) = x;
-  seq->size++;
+  seq->base[seq->tail++] = x;
 }
-void show_list(seqstack* seq){
-  ElemType* e = seq->top;
-  while(e-- != seq->base){
-    printf("%d\n",*e);
+void show_list(seqqueue* seq){
+  int i = seq->front;
+  while(i <= seq->tail-1){
+    printf("%d\n", seq->base[i++]);
   }
 }
-void pop(seqstack* seq){
-  --seq->top;
-  seq->size--;
+void deQueue(seqqueue* seq){
+  if(seq->front < SEQQUEUE_INIT_SIZE - 1){
+    seq->front++;
+  }
 }
-int length(seqstack* seq){
-  return seq->size;
+void clear(seqqueue* seq){
+ 
 }
-void clear(seqstack* seq){
-  seq->top = seq->base;
-  seq->size = 0;
-}
-void destroy(seqstack* seq){
-  free(seq->base);
+void destroy(seqqueue* seq){
+
 }
