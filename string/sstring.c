@@ -75,8 +75,8 @@ void concat(SString* ss1, SString ss2){
 }
 
 void substring(SString ss, SString sub, int pos, int len){
-  if(pos >= MAX_SIZE)return;
-  if(getLength(ss) - 1 > pos){
+  if(pos < 0 || pos >= MAX_SIZE || getLength(ss) - 1 <= pos)return;
+  while(ss[pos] != '\0'){
 
   }
 }
