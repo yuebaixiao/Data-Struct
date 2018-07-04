@@ -22,5 +22,6 @@ typedef struct SMatrix{
 
 void createMatrix(SMatrix *sm);
 void printMatrix(SMatrix *sm);
+void fanzhuan(SMatrix *s1);
 
 #endif

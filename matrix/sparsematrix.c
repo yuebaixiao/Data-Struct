@@ -29,3 +29,32 @@ void printMatrix(SMatrix *sm){
     printf("(%d, %d, %d)\n", sm->data[i].row, sm->data[i].col, sm->data[i].e);
   }
 }
+
+void fanzhuan(SMatrix *s1){
+  triple tmp;
+  for(int i = 0; i < s1->tu - 1; ++i){
+    for(int j = 0; j < s1->tu - i - 1; ++j){
+      if(s1->data[j].col >= s1->data[j+1].col){
+	if(s1->data[j].col == s1->data[j+1].col){
+	  if(s1->data[j].row > s1->data[j+1].row){
+	    memmove(&tmp, &(s1->data[j]), sizeof(triple));
+	    memmove(&(s1->data[j]), &(s1->data[j+1]), sizeof(triple));
+	    memmove(&(s1->data[j+1]), &tmp, sizeof(triple));
+	  }
+	}else{
+	  memmove(&tmp, &(s1->data[j]), sizeof(triple));
+	  memmove(&(s1->data[j]), &(s1->data[j+1]), sizeof(triple));
+	  memmove(&(s1->data[j+1]), &tmp, sizeof(triple));
+	}
+      }
+    }
+    
+  }
+  
+  for(int i = 0; i < s1->tu; ++i){
+    s1->data[i].row = s1->data[i].row + s1->data[i].col;
+    s1->data[i].col = s1->data[i].row - s1->data[i].col;
+    s1->data[i].row = s1->data[i].row - s1->data[i].col;
+  }
+  
+}
