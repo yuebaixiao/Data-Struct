@@ -11,9 +11,7 @@ int main(){
   char* e = "((1,2,3))";
   char* f = "()";
   char* g = "(1,(2,(3,4)),5)";
-  char* h = "((),1,(2,(3,(),4)),5)";
-  char* i = "((),1)";
-  
-  createGenList(&gl, f);
+
+  createGenList(&gl, g);
   return 0;
 }

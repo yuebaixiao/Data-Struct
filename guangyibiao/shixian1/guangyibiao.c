@@ -44,41 +44,40 @@ bool server1(char* sub, char* hsub){
 }
 
 void createGenList(GenList* gl, char* s){
-
   int n = strlen(s);
-  //列表里最后一项是空括号()
-  if(n - 2 == 0){
-    *gl = (GLNode*)malloc(sizeof(GLNode));
-    assert(NULL != *gl);
-    (*gl)->tail = (*gl)->head = NULL;
-    (*gl)->tag = LIST;
-    return;
-  }
-  
-  char* sub  = (char*)malloc(sizeof(char) * (n - 2));
-  char* hsub = (char*)malloc(sizeof(char) * (n - 2));
-  assert(NULL != sub && NULL != hsub);
+  char* sub = (char*)malloc(sizeof(char) * (n-2));
+  char* hsub = (char*)malloc(sizeof(char) * (n-2));
+  assert(sub != NULL && hsub != NULL);
+
+  //sub是去掉了最外层括号的串
   strncpy(sub, s+1, n-2);
   sub[n-2] = '\0';
 
-  GLNode* p = *gl;
-  while(strlen(sub) != 0){
-    if(NULL == p){
-      *gl = p = (GLNode*)malloc(sizeof(GLNode));
-    }else{
-      p = p->tail = (GLNode*)malloc(sizeof(GLNode));
-    }
-    assert(NULL != p);
+  if(NULL == *gl){
+    *gl = (GLNode*)malloc(sizeof(GLNode));
+    assert(NULL != gl);
 
+    (*gl)->tag = HEAD;
+    (*gl)->head = (*gl)->tail = NULL;
+  }
+
+  GLNode* p = (*gl);
+  while(strlen(sub) != 0){
+    p = p->tail =  (GLNode*)malloc(sizeof(GLNode));
+    assert(NULL != p);
+    p->head = p->tail = NULL;
+
+    //"1,2,3" ==> hsub="1" sub="2,3"
+    //"(1,2),3,4" ==> hsub="(1,2)" sub="3,4"
     if(server1(sub, hsub)){
       if(hsub[0] == '('){
-	p->tag = LIST;
+	p->tag = CHILDLIST;
 	createGenList(&(p->head), hsub);
       }
       else{
 	p->tag = ATOM;
 	p->atom = atoi(hsub);
       }
-    }    
-  }
+    }
+  } 
 }

@@ -11,7 +11,7 @@
 
 #define AtomType int
 
-typedef enum{ATOM, LIST}ElemTag;
+typedef enum{HEAD, ATOM, CHILDLIST}ElemTag;
 typedef struct GLNode{
   ElemTag tag;
   union{
