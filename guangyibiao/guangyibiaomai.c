@@ -9,12 +9,17 @@ int main(){
   char* c = "(1,(2),3)";
   char* d = "((1,2),3)";
   char* e = "((1,2,3))";
-  char* f = "(())";
+  char* f = "((),1)";
   char* g = "(1,(2,(3,4)),5)";
   char* h = "((),1,(2,(3,(),4)),5)";
-  char* i = "((),1)";
+  char* i = "(())";
   
-  createGenList(&gl, f);
-  show(gl);
+  createGenList(&gl, i);
+  if(gl != NULL){
+    printf("(");
+    show(gl);
+    printf(")\n");
+  }
+  
   return 0;
 }

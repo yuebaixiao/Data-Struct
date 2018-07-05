@@ -5,10 +5,12 @@ void init(GenList* gl){
 }
 
 bool server1(char* sub, char* hsub){
+  /*
   if(*sub == '\0' || strcmp(sub, "()") == 0){
     hsub[0] = '\0';
     return true;
   }
+  */
 
   int n = strlen(sub);
   int i = 0;
