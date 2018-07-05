@@ -9,11 +9,12 @@ int main(){
   char* c = "(1,(2),3)";
   char* d = "((1,2),3)";
   char* e = "((1,2,3))";
-  char* f = "()";
+  char* f = "(())";
   char* g = "(1,(2,(3,4)),5)";
   char* h = "((),1,(2,(3,(),4)),5)";
   char* i = "((),1)";
   
   createGenList(&gl, f);
+  show(gl);
   return 0;
 }

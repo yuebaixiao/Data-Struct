@@ -47,6 +47,7 @@ void createGenList(GenList* gl, char* s){
 
   int n = strlen(s);
   //列表里最后一项是空括号()
+  /*
   if(n - 2 == 0){
     *gl = (GLNode*)malloc(sizeof(GLNode));
     assert(NULL != *gl);
@@ -54,6 +55,7 @@ void createGenList(GenList* gl, char* s){
     (*gl)->tag = LIST;
     return;
   }
+  */
   
   char* sub  = (char*)malloc(sizeof(char) * (n - 2));
   char* hsub = (char*)malloc(sizeof(char) * (n - 2));
@@ -65,8 +67,10 @@ void createGenList(GenList* gl, char* s){
   while(strlen(sub) != 0){
     if(NULL == p){
       *gl = p = (GLNode*)malloc(sizeof(GLNode));
+      p->head = p->tail = NULL;
     }else{
       p = p->tail = (GLNode*)malloc(sizeof(GLNode));
+      p->head = p->tail = NULL;
     }
     assert(NULL != p);
 
@@ -80,5 +84,26 @@ void createGenList(GenList* gl, char* s){
 	p->atom = atoi(hsub);
       }
     }    
+  }
+}
+
+void show(GenList gl){
+  if(gl == NULL) return;
+  
+  if(gl->tag == ATOM){
+    printf("%d", gl->atom);
+    if(gl->tail != NULL){
+      printf(",");
+    }
+    show(gl->tail);
+  }
+  else if(gl->tag == LIST){
+    printf("(");
+    show(gl->head);
+    printf(")");
+    if(gl->tail != NULL){
+      printf(",");
+    }
+    show(gl->tail);
   }
 }

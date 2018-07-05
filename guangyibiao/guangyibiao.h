@@ -25,5 +25,6 @@ typedef GLNode* GenList;
 
 void init(GenList* gl);
 void createGenList(GenList* gl, char* s);
+void show(GenList gl);
 
 #endif
