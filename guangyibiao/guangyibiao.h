@@ -26,5 +26,16 @@ typedef GLNode* GenList;
 void init(GenList* gl);
 void createGenList(GenList* gl, char* s);
 void show(GenList gl);
+void destroy(GenList gl);
+void copy(GenList* dest, GenList src);
+int length(GenList gl);
+int depth(GenList gl);
+bool isEmpty(GenList gl);
+GLNode* getHead(GenList gl);
+GLNode* getTail(GenList gl);
+void push_head(GenList* gl, GLNode* node);
+void push_tail(GenList gl, GLNode* node);
+void pop_head(GenList* gl);
+void pop_tail(GenList* gl);
 
 #endif

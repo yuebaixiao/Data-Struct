@@ -5,12 +5,6 @@ void init(GenList* gl){
 }
 
 bool server1(char* sub, char* hsub){
-  /*
-  if(*sub == '\0' || strcmp(sub, "()") == 0){
-    hsub[0] = '\0';
-    return true;
-  }
-  */
 
   int n = strlen(sub);
   int i = 0;
@@ -48,16 +42,6 @@ bool server1(char* sub, char* hsub){
 void createGenList(GenList* gl, char* s){
 
   int n = strlen(s);
-  //列表里最后一项是空括号()
-  /*
-  if(n - 2 == 0){
-    *gl = (GLNode*)malloc(sizeof(GLNode));
-    assert(NULL != *gl);
-    (*gl)->tail = (*gl)->head = NULL;
-    (*gl)->tag = LIST;
-    return;
-  }
-  */
   
   char* sub  = (char*)malloc(sizeof(char) * (n - 2));
   char* hsub = (char*)malloc(sizeof(char) * (n - 2));
@@ -89,7 +73,7 @@ void createGenList(GenList* gl, char* s){
   }
 }
 
-void show(GenList gl){
+void show_detail(GenList gl){
   if(gl == NULL) return;
   
   if(gl->tag == ATOM){
@@ -97,15 +81,67 @@ void show(GenList gl){
     if(gl->tail != NULL){
       printf(",");
     }
-    show(gl->tail);
+    show_detail(gl->tail);
   }
   else if(gl->tag == LIST){
     printf("(");
-    show(gl->head);
+    show_detail(gl->head);
     printf(")");
     if(gl->tail != NULL){
       printf(",");
     }
-    show(gl->tail);
+    show_detail(gl->tail);
   }
 }
+
+void show(GenList gl){
+  if(gl != NULL){
+    printf("(");
+    show_detail(gl);
+    printf(")\n");
+  }
+
+}
+
+void destroy(GenList gl){}
+void copy(GenList* dest, GenList src){}
+int length(GenList gl){
+  if(NULL == gl)return 0;
+  int i = 0;
+  GLNode* p = gl;
+  while(p != NULL){
+    p = p->tail;
+    i++;
+  }
+  return i;
+}
+int depth(GenList gl){}
+bool isEmpty(GenList gl){
+  return gl == NULL;
+}
+GLNode* getHead(GenList gl){
+  if(NULL == gl)return NULL;
+
+  return gl;
+}
+GLNode* getTail(GenList gl){
+  if(NULL == gl)return NULL;
+
+  GLNode* p = gl;
+  while(p->tail != NULL){
+    p = p->tail;
+  }
+  return p;
+}
+void push_head(GenList* gl, GLNode* node){
+  if(NULL == node) return;
+  getTail(node)->tail = *gl;
+  *gl = node;
+}
+void push_tail(GenList gl, GLNode* node){
+  if(NULL == node) return;
+  getTail(gl)->tail = node;
+  node->tail = NULL;
+}
+void pop_head(GenList* gl){}
+void pop_tail(GenList* gl){}
