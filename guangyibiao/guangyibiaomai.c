@@ -16,13 +16,7 @@ int main(){
   
   createGenList(&gl, d);
   show(gl);
-  /*
-  if(gl != NULL){
-    printf("(");
-    show(gl);
-    printf(")\n");
-  }
-  */
+
 
   printf("length:%d\n", length(gl));
 
@@ -33,11 +27,31 @@ int main(){
 
   GLNode* n1;
   init(&n1);
-  char* n1a = "(1,2,3)";  
+  char* n1a = "(1)";  
   createGenList(&n1, n1a);
   show(n1);
   push_head(&gl, n1);
   show(gl);
+
+  GLNode* n2;
+  init(&n2);
+  char* n2a = "(4,(5,6))";  
+  createGenList(&n2, n2a);
+  show(n2);
+  push_tail(gl, n2);
+  show(gl);
+
+  pop_head(&gl);
+  show(gl);
+
+  pop_tail(&gl);
+  show(gl);
+
+  pop_head(&gl);
+  show(gl);
+
+  //destroy(gl);
+  //gl = NULL;
   
   return 0;
 }

@@ -103,7 +103,19 @@ void show(GenList gl){
 
 }
 
-void destroy(GenList gl){}
+void destroy(GenList gl){
+  if(gl == NULL) return;
+  
+  if(gl->tag == ATOM){
+    destroy(gl->tail);
+    free(gl);
+  }
+  else if(gl->tag == LIST){
+    destroy(gl->head);
+    destroy(gl->tail);
+    free(gl);
+  }
+}
 void copy(GenList* dest, GenList src){}
 int length(GenList gl){
   if(NULL == gl)return 0;
@@ -141,7 +153,44 @@ void push_head(GenList* gl, GLNode* node){
 void push_tail(GenList gl, GLNode* node){
   if(NULL == node) return;
   getTail(gl)->tail = node;
-  node->tail = NULL;
+  getTail(node)->tail = NULL;
 }
-void pop_head(GenList* gl){}
-void pop_tail(GenList* gl){}
+
+void destroy_node(GenList gl){
+  if(gl == NULL) return;
+  
+  if(gl->tag == ATOM){
+    free(gl);
+  }
+  else if(gl->tag == LIST){
+    destroy_node(gl->head);
+    free(gl);
+  }
+}
+
+void pop_head(GenList* gl){
+  if(NULL == *gl)return;
+
+  GLNode* p = *gl;
+  *gl = (*gl)->tail;
+  destroy_node(p);
+  p = NULL;
+}
+void pop_tail(GenList* gl){
+  if(NULL == gl)return;
+
+  int l = length(*gl);
+
+  GLNode* p = *gl;
+  int i = 1;
+  while(i++ != l - 1){
+    p = p->tail;
+  }
+  
+  if(l == 1){
+    free(*gl);
+    *gl = NULL;
+  }
+  destroy_node(p->tail);
+  p->tail = NULL;
+}
