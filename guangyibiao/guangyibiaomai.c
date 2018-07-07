@@ -50,6 +50,13 @@ int main(){
   pop_head(&gl);
   show(gl);
 
+  GenList gl1,gl2;
+  init(&gl1);
+  init(&gl2);
+  createGenList(&gl1, d);
+  copy(&gl2, gl1);
+  show(gl2);
+
   //destroy(gl);
   //gl = NULL;
   

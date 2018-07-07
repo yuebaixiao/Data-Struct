@@ -116,7 +116,26 @@ void destroy(GenList gl){
     free(gl);
   }
 }
-void copy(GenList* dest, GenList src){}
+void copy(GenList* dest, GenList src){
+  if(src == NULL) {
+    *dest = NULL;
+    return;
+  }
+
+  GLNode* p = (GLNode*)malloc(sizeof(GLNode));
+  *dest = p;
+  p->head = p->tail = NULL;
+  p->tag = src->tag;
+
+  if(src->tag == ATOM){
+    p->atom = src->atom;
+    copy(&(p->tail), src->tail); 
+  }
+  else if(src->tag == LIST){
+    copy(&(p->head), src->head); 
+    copy(&(p->tail), src->tail); 
+  }
+}
 int length(GenList gl){
   if(NULL == gl)return 0;
   int i = 0;
@@ -127,7 +146,9 @@ int length(GenList gl){
   }
   return i;
 }
-int depth(GenList gl){}
+int depth(GenList gl){
+
+}
 bool isEmpty(GenList gl){
   return gl == NULL;
 }
