@@ -100,7 +100,6 @@ void show(GenList gl){
     show_detail(gl);
     printf(")\n");
   }
-
 }
 
 void destroy(GenList gl){
@@ -147,7 +146,29 @@ int length(GenList gl){
   return i;
 }
 int depth(GenList gl){
-
+  if(NULL == gl)return 0;
+  int dep = 1;
+  int tmp = dep;
+  GLNode* p = gl;
+  while(p != NULL){
+    depth_detail(p, &tmp);
+    if(tmp > dep){
+      dep = tmp;
+    }
+    p = p->tail;
+    tmp = 1;
+  }
+  return dep;
+}
+int depth_detail(GenList gl, int* tmp){
+  if(NULL == gl)return;
+  if(gl->tag == ATOM){
+    depth_detail(gl->tail, tmp);
+  }
+  else if(gl->tag == LIST){
+    *tmp = *tmp + 1;
+    depth_detail(gl->head, tmp);
+  }
 }
 bool isEmpty(GenList gl){
   return gl == NULL;

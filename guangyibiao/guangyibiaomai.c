@@ -57,6 +57,13 @@ int main(){
   copy(&gl2, gl1);
   show(gl2);
 
+  GenList gl3;
+  init(&gl3);
+  //  createGenList(&gl3, "(1,(2,3,(1,2,(4,4))),(4,5,(1,2)),6)");
+  createGenList(&gl3, "(1,((())),3)");
+  show(gl3);
+  //printf("depth=%d\n", depth(gl3));
+
   //destroy(gl);
   //gl = NULL;
   
