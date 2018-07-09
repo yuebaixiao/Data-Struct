@@ -19,4 +19,7 @@ typedef struct BinTree{
 }BinTree;
 
 void init(BinTree* tr, ElemType val);
+void createBinTree(BinTree* bt);
+void createBinTree_str(BinTree* bt, char* str);
+
 #endif
