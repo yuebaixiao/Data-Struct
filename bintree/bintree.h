@@ -28,5 +28,7 @@ void show_clr(BinTree* tr);
 void show_lcr(BinTree* tr);
 //先左树，再右树，再中心
 void show_lrc(BinTree* tr);
+//层级遍历
+void show_level(BinTree* tr);
 
 #endif

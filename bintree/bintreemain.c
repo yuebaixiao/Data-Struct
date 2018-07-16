@@ -19,5 +19,7 @@ int main(){
   show_lrc(&tr1);
   printf("\n");
 
+  show_level(&tr1);
+
   return 0;
 }

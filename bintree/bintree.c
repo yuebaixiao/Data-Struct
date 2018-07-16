@@ -1,4 +1,5 @@
 #include "bintree.h"
+#include "nodequeue.h"
 
 void init(BinTree* tr, ElemType val){
   tr->root = NULL;
@@ -86,4 +87,30 @@ void show_node_lrc(BinTreeNode* n){
 //先左树，再右树，再中心
 void show_lrc(BinTree* tr){
   show_node_lrc(tr->root);
+}
+
+//层级遍历
+void show_node_level(BinTreeNode* n){
+  if(NULL == n) return;
+  NodeQueue queue;
+  init_queue(&queue);
+  enQueue(&queue, n);
+
+  BinTreeNode* tmp;
+  while(!isQueueEmpty(&queue)){
+    if(getHead(&queue) == NULL)break;
+    tmp = getHead(&queue)->data;
+    deQueue(&queue);
+    printf("%c ", tmp->data);
+    if(tmp->leftChild != NULL)
+      enQueue(&queue, tmp->leftChild);
+    if(tmp->rightChild != NULL)
+      enQueue(&queue, tmp->rightChild);
+  }
+  printf("\n");
+}
+
+//层级遍历
+void show_level(BinTree* tr){
+  show_node_level(tr->root);
 }
