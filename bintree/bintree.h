@@ -31,4 +31,15 @@ void show_lrc(BinTree* tr);
 //层级遍历
 void show_level(BinTree* tr);
 
+int get_size1(BinTree* tr);
+int get_size2(BinTree* tr);
+int get_height(BinTree* tr);
+BinTreeNode* search(BinTree* tr, ElemType key);
+BinTreeNode* get_parent(BinTree* tr, BinTreeNode* p);
+BinTreeNode* get_left_chile(BinTree* tr, BinTreeNode* p);
+BinTreeNode* get_right_chile(BinTree* tr, BinTreeNode* p);
+bool isBintreeEmpty(BinTree* tr);
+void copy(BinTree* tr);
+void bintree_clear(BinTree* tr);
+
 #endif

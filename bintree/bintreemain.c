@@ -21,5 +21,10 @@ int main(){
 
   show_level(&tr1);
 
+  printf("树种节点数:%d\n", get_size1(&tr1));
+  printf("树种节点数:%d\n", get_size2(&tr1));
+
+  printf("树的高度:%d\n", get_height(&tr1));
+
   return 0;
 }

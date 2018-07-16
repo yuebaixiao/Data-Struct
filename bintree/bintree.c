@@ -114,3 +114,81 @@ void show_node_level(BinTreeNode* n){
 void show_level(BinTree* tr){
   show_node_level(tr->root);
 }
+
+//--------------------分界线--------------------
+
+
+//取得树中节点个数
+void get_node_size1(BinTreeNode* n, int* p){
+  if (NULL == n)return;
+  else{
+    *p = *p + 1;
+    get_node_size1(n->leftChild, p);
+    get_node_size1(n->rightChild, p);
+  }
+}
+//取得树中节点个数
+int get_size1(BinTree* tr){
+  int size = 0;
+  get_node_size1(tr->root, &size);
+  return size;
+}
+int get_node_size2(BinTreeNode* p){
+  if(NULL == p) return 0;
+  else{
+    return get_node_size2(p->leftChild) + get_node_size2(p->rightChild) + 1;
+  }
+}
+int get_size2(BinTree* tr){
+  return get_node_size2(tr->root);
+}
+void get_node_height(BinTreeNode* n, int* p){
+  if(NULL == n) return;
+  NodeQueue queue;
+  init_queue(&queue);
+  enQueue(&queue, n);
+
+  BinTreeNode* tmp;
+  while(!isQueueEmpty(&queue)){
+    if(getHead(&queue) == NULL)break;
+    tmp = getHead(&queue)->data;
+    deQueue(&queue);
+
+    if(tmp->leftChild != NULL){
+      *p = *p + 1;
+      enQueue(&queue, tmp->leftChild);
+    }
+    if(tmp->rightChild != NULL){
+      enQueue(&queue, tmp->rightChild);
+      if(tmp->leftChild == NULL)
+	*p = *p + 1;
+    }
+  }
+
+}
+int get_height(BinTree* tr){
+  int size = 0;
+  get_node_height(tr->root, &size);
+  return size;
+}
+BinTreeNode* search(BinTree* tr, ElemType key){
+
+}
+BinTreeNode* get_parent(BinTree* tr, BinTreeNode* p){
+
+}
+BinTreeNode* get_left_chile(BinTree* tr, BinTreeNode* p){
+
+}
+BinTreeNode* get_right_chile(BinTree* tr, BinTreeNode* p){
+
+}
+bool isBintreeEmpty(BinTree* tr){
+
+}
+void copy(BinTree* tr){
+
+}
+void bintree_clear(BinTree* tr){
+
+}
