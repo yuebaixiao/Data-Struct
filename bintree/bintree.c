@@ -144,32 +144,24 @@ int get_size2(BinTree* tr){
 }
 void get_node_height(BinTreeNode* n, int* p){
   if(NULL == n) return;
-  NodeQueue queue;
-  init_queue(&queue);
-  enQueue(&queue, n);
+  *p = *p + 1;
 
-  BinTreeNode* tmp;
-  while(!isQueueEmpty(&queue)){
-    if(getHead(&queue) == NULL)break;
-    tmp = getHead(&queue)->data;
-    deQueue(&queue);
+  int t1 = 0, t2 = 0;
 
-    if(tmp->leftChild != NULL){
-      *p = *p + 1;
-      enQueue(&queue, tmp->leftChild);
-    }
-    if(tmp->rightChild != NULL){
-      enQueue(&queue, tmp->rightChild);
-      if(tmp->leftChild == NULL)
-	*p = *p + 1;
-    }
-  }
-
+  get_node_height(n->leftChild, &t1);
+  get_node_height(n->rightChild,&t2);
+  if(t1 > t2)
+    *p = *p + t1;
+  else
+    *p = *p + t2;
 }
 int get_height(BinTree* tr){
   int size = 0;
-  get_node_height(tr->root, &size);
-  return size;
+  if(tr->root != NULL) size++;
+  int t1 = 0, t2 = 0;
+  get_node_height(tr->root->leftChild, &t1);
+  get_node_height(tr->root->rightChild, &t2);
+  return t1 > t2 ? t1 + size : t2 + size;
 }
 BinTreeNode* search(BinTree* tr, ElemType key){
 

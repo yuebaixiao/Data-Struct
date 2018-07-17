@@ -4,11 +4,11 @@ int main(){
   BinTree tr;
   init(&tr, '#');
 
-  //ABC##DE##F##G##H##
+  //ABC##DE#F##G##H##
   //createBinTree(&tr);
 
-  char* a = "ABC##DE##F##G#H##";
-  //char* a = "AB##C##";
+  //char* a = "ABC##DEI##F##G#H##";
+  char* a = "ABC#D##E#F#GI##L#J";
   BinTree tr1;
   init(&tr1, '#');
   createBinTree_str(&tr1, &a);
