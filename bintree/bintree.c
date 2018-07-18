@@ -163,8 +163,22 @@ int get_height(BinTree* tr){
   get_node_height(tr->root->rightChild, &t2);
   return t1 > t2 ? t1 + size : t2 + size;
 }
+BinTreeNode* search_node(BinTreeNode* n, ElemType key){
+  if (NULL == n || n->data == key){
+    return n;
+  }else{
+    BinTreeNode* tmp;
+    tmp = search_node(n->leftChild, key);
+    if(NULL == tmp){
+      tmp = search_node(n->rightChild, key);
+    }
+    return tmp;
+  }
+}
 BinTreeNode* search(BinTree* tr, ElemType key){
-
+  BinTreeNode* n = NULL;
+  n = search_node(tr->root, key);
+  return n;
 }
 BinTreeNode* get_parent(BinTree* tr, BinTreeNode* p){
 
