@@ -36,10 +36,8 @@ int get_size2(BinTree* tr);
 int get_height(BinTree* tr);
 BinTreeNode* search(BinTree* tr, ElemType key);
 BinTreeNode* get_parent(BinTree* tr, BinTreeNode* p);
-BinTreeNode* get_left_chile(BinTree* tr, BinTreeNode* p);
-BinTreeNode* get_right_chile(BinTree* tr, BinTreeNode* p);
 bool isBintreeEmpty(BinTree* tr);
-void copy(BinTree* tr);
+void copy(BinTree* tr1, BinTree* tr2);
 void bintree_clear(BinTree* tr);
 
 #endif

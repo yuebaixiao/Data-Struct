@@ -180,21 +180,50 @@ BinTreeNode* search(BinTree* tr, ElemType key){
   n = search_node(tr->root, key);
   return n;
 }
-BinTreeNode* get_parent(BinTree* tr, BinTreeNode* p){
-
+BinTreeNode* get_node_parent(BinTreeNode* n, BinTreeNode* target){
+  if(NULL == n || NULL == target) return NULL;
+  if(n->leftChild == target || n->rightChild == target){
+    return n;
+  }
+  else{
+    BinTreeNode* tmp = NULL;
+    tmp = get_node_parent(n->leftChild, target);
+    if(NULL == tmp){
+      tmp = get_node_parent(n->rightChild, target);
+    }
+    return tmp;
+  }
 }
-BinTreeNode* get_left_chile(BinTree* tr, BinTreeNode* p){
-
-}
-BinTreeNode* get_right_chile(BinTree* tr, BinTreeNode* p){
-
+BinTreeNode* get_parent(BinTree* tr, BinTreeNode* target){
+  get_node_parent(tr->root, target);
 }
 bool isBintreeEmpty(BinTree* tr){
+  return NULL == tr->root;
+}
+void copy_node(BinTreeNode** n1, BinTreeNode* n2){
+  if(NULL == n2){
+    *n1 = NULL;
+    return;
+  }else{
+    BinTreeNode* p = (BinTreeNode*)malloc(sizeof(BinTreeNode*));
+    p->data = n2->data;
+    *n1 = p;
+    copy_node(&((*n1)->leftChild), n2->leftChild);
+    copy_node(&((*n1)->rightChild), n2->rightChild);
+  }
 
 }
-void copy(BinTree* tr){
-
+void copy(BinTree* tr1, BinTree* tr2){
+  copy_node(&(tr1->root), tr2->root);
+}
+void bintree_node_clear(BinTreeNode** n){
+  if(NULL == *n)return;
+  bintree_node_clear(&((*n)->leftChild));
+  bintree_node_clear(&((*n)->rightChild));
+  free(*n);
+  *n = NULL;
 }
 void bintree_clear(BinTree* tr){
-
+  bintree_node_clear(&(tr->root));
+  //  init(tr, '#');  
 }
