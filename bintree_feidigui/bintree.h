@@ -46,5 +46,7 @@ void display_clr(BinTree* tr);
 void display_lcr(BinTree* tr);
 //先左树，再右树，再中心
 void display_lrc(BinTree* tr);
+//先左树，再右树，再中心
+void display_lrc1(BinTree* tr);
 
 #endif

@@ -293,5 +293,46 @@ void display_node_lcr(BinTreeNode* n){
 void display_lcr(BinTree* tr){
   display_node_lcr(tr->root);
 }
-//非递归 先左树，再右树，再中心
-void display_lrc(BinTree* tr){}
+//非递归 先左树，再右树，再中心(虽然实现了遍历，但是破坏了树的结构)
+void display_node_lrc(BinTreeNode* n){
+
+  if(NULL == n){
+    printf("是空树\n");
+    return;
+  }
+  nodestack stack;
+  init(&stack);
+  push(&stack, n);
+  Node* tmp = NULL;
+  while(0 != stack.size){
+    tmp = pop(&stack);
+
+    if(NULL != tmp->data->leftChild){
+      //中心节点
+      push(&stack, tmp->data);
+      if(NULL != tmp->data->rightChild){
+	push(&stack, tmp->data->rightChild);
+      }
+      push(&stack, tmp->data->leftChild);
+
+      //把中心节点的左右节点的指针设置成NULL
+      tmp->data->rightChild = tmp->data->leftChild = NULL;
+    }
+    else{
+      if(NULL == tmp->data->rightChild){
+	printf("%c ", tmp->data->data);
+      }
+      else{
+	//中心节点
+	push(&stack, tmp->data);
+	push(&stack, tmp->data->rightChild);
+	//把中心节点的左右节点的指针设置成NULL
+	tmp->data->rightChild = tmp->data->leftChild = NULL;
+      }
+    }
+  }
+}
+//非递归 先左树，再右树，再中心(虽然实现了遍历，但是破坏了树的结构)
+void display_lrc(BinTree* tr){
+  display_node_lrc(tr->root);
+}

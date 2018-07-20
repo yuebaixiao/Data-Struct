@@ -17,5 +17,8 @@ int main(){
   printf("\n");
   display_lcr(&tr1);
   printf("\n");
+  display_lrc(&tr1);
+  printf("\n");
+
   return 0;
 }
