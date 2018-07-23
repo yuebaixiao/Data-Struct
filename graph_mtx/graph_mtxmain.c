@@ -27,7 +27,7 @@ int main(){
   //show_graph(&gm);
 
   //删除顶点
-  remove_vertex(&gm, 'B');
+  remove_vertex(&gm, 'A');
   //打印图
   show_graph(&gm);
 }

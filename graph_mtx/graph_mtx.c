@@ -89,34 +89,42 @@ void remove_edge(GraphMtx* gm, T v1, T v2){
 //删除顶点
 void remove_vertex(GraphMtx* gm, T v){
   int k = getVertexIndex(gm, v);
-  //找到了要被删除节点的index
-  if(k != -1){
-    //删除和要被删除点关联的线
-    for(int i = 0; i < gm->NumVertices - 1; ++i){
-      //从要被删除的顶点开始，用后面的值替换前面的值
-      for(int j = k; j < gm->NumVertices - 1; ++j){
-	//用同行的下一个值，替换掉现在位置的值
-	gm->Edge[i][j] = gm->Edge[i][j+1];
-	//循环到要删除的行的位置
-	if(i >= k){
-	  //用同列的下一行的值，替换掉现在位置的值
-	  gm->Edge[i][j] = gm->Edge[i+1][j];
-	}
-      }
-      //因为j的循环的临界值是NumVertices - 1，所以清除每行的最后一个值
-      gm->Edge[i][gm->NumVertices-1] = 0;
+  if(-1 == k)return;
+  
+  //算出和要删除节点相关的边的数量，并减少。
+  for(int i = 0; i < gm->NumVertices; ++i){
+    if(gm->Edge[k][i] == 1){
+      gm->NumEdges--;
     }
-    //因为i的循环的临界值是NumVertices - 1，所以清除最后一整行的值
-    memset(gm->Edge[gm->NumVertices], 0, sizeof(int) * gm->NumVertices);
-    //TODO 未删除线的数量
+  }
+
+  //如果要删除的顶点不是最后一个顶点
+  if(k != gm->NumVertices - 1){
+    //把每一列向左移动一列
+    for(int i = 0; i < gm->NumVertices; ++i){
+      //把后面内存里的内容移动到前面，并把最后一个元素设置成0
+      memmove(&(gm->Edge[i][k]), &(gm->Edge[i][k+1]), sizeof(int) * (gm->NumVertices-1-k));
+      gm->Edge[i][gm->NumVertices - 1] = 0;
+    }
+    //把每一行向上移动一行
+    for(int i = k; i < gm->NumVertices - 1; ++i){
+      memmove(gm->Edge[i], gm->Edge[i+1], sizeof(int) * (gm->NumVertices-1));
+    }
+    memset(gm->Edge[gm->NumVertices - 1], 0, sizeof(int) * (gm->NumVertices - 1));
+    //memmove(&(gm->Edge[k]), &(gm->Edge[k+1]), sizeof(int*) * (gm->NumVertices-1-k));
+    //memset(gm->Edge[gm->NumVertices - 1], 0, sizeof(int) * (gm->NumVertices - 1));
 
     //删除点
-    for(int i = k; i < gm->NumVertices - 1; ++i){
-      gm->VerticesList[i] = gm->VerticesList[i+1];
-    }
-    //最后一个点清空
-    gm->VerticesList[gm->NumVertices - 1] = ' ';
-    gm->NumVertices--;
+    memmove(&(gm->VerticesList[k]), &(gm->VerticesList[k+1]), sizeof(T) * (gm->NumVertices-1-k));
   }
+  //如果要删除的顶点是最后一个顶点
+  else{
+    for(int i = 0; i < gm->NumVertices; ++i){
+      gm->Edge[i][k] = gm->Edge[k][i] = 0;
+    }
+  }
+
+  //节点数目减1
+  gm->NumVertices--;
 }
 
