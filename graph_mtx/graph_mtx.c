@@ -128,3 +128,40 @@ void remove_vertex(GraphMtx* gm, T v){
   gm->NumVertices--;
 }
 
+//摧毁图
+void destroy_graph(GraphMtx* gm){
+  free(gm->VerticesList);
+  for(int i = 0; i < gm->NumVertices; ++i){
+    free(gm->Edge[i]);
+  }
+  free(gm->Edge);
+  gm->Edge = NULL;
+  gm->VerticesList = NULL;
+  gm->MaxVertices = gm->NumVertices = gm->NumEdges = 0;
+}
+
+//取得与某顶点有连线的第一个顶点
+int getNeighbor(GraphMtx* gm, T v){
+  int p = getVertexIndex(gm, v);
+  if(-1 == p)return -1;
+  for(int i = 0; i < gm->NumVertices; ++i){
+    if(gm->Edge[p][i] == 1)
+      return i;
+  }
+  return -1;
+}
+
+//取得与v1顶点，v1顶点之后的v2顶点的之后的有连线的第一个顶点
+int getNextNeighbor(GraphMtx* gm, T v1, T v2){
+  if(v1 == v2)return -1;
+  int p1 = getVertexIndex(gm, v1);
+  int p2 = getVertexIndex(gm, v2);
+  if(p1 == -1 || p2 == -1)return -1;
+
+  for(int i = p2 + 1; i < gm->NumVertices; ++i){
+    if(gm->Edge[p1][i] == 1)
+      return i;
+  }
+
+  return -1;
+}
