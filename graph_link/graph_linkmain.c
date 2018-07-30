@@ -13,13 +13,26 @@ int main(){
   //显示图
   //show_graph_link(&gl);
 
-  //插入边
-  insert_edge(&gl, 'A', 'B');
-  insert_edge(&gl, 'A', 'D');
-  insert_edge(&gl, 'B', 'C');
-  insert_edge(&gl, 'B', 'E');
-  insert_edge(&gl, 'C', 'D');
-  insert_edge(&gl, 'C', 'E');
+  //插入边(尾插)
+  /*
+  insert_edge_tail(&gl, 'A', 'B');
+  insert_edge_tail(&gl, 'A', 'D');
+  insert_edge_tail(&gl, 'B', 'C');
+  insert_edge_tail(&gl, 'B', 'E');
+  insert_edge_tail(&gl, 'C', 'D');
+  insert_edge_tail(&gl, 'C', 'E');
+  */
+
+  //插入边(头插)
+  ///*
+  insert_edge_head(&gl, 'A', 'B');
+  insert_edge_head(&gl, 'A', 'D');
+  insert_edge_head(&gl, 'B', 'C');
+  insert_edge_head(&gl, 'B', 'E');
+  insert_edge_head(&gl, 'C', 'D');
+  insert_edge_head(&gl, 'C', 'E');
+  //*/
+  
   //显示图
   show_graph_link(&gl);
 }

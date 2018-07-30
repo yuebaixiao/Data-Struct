@@ -21,7 +21,7 @@ typedef struct Edge{
 typedef struct Vertex{
   //顶点的值
   T data;
-  //顶点的一个边（单边）
+  //边
   Edge* adj;
 }Vertex;
 
@@ -40,8 +40,10 @@ void init_graph_link(GraphLink* g);
 void show_graph_link(GraphLink* g);
 //插入顶点
 void insert_vertex(GraphLink* g, T v);
-//插入边
-void insert_edge(GraphLink* g, T v1, T v2);
+//插入边尾插
+void insert_edge_tail(GraphLink* g, T v1, T v2);
+//插入边头插
+void insert_edge_head(GraphLink* g, T v1, T v2);
 //删除边
 void remove_edge(GraphLink* g, T v1, T v2);
 #endif

@@ -57,7 +57,7 @@ void buyEdge(Edge** e, int idx){
   }
 }
 //插入边(尾插）
-void insert_edge(GraphLink* g, T v1, T v2){
+void insert_edge_tail(GraphLink* g, T v1, T v2){
   int p1 = getVertexIndex(g, v1);
   int p2 = getVertexIndex(g, v2);
 
@@ -69,10 +69,28 @@ void insert_edge(GraphLink* g, T v1, T v2){
   g->NumEdges++;
 
 }
-//插入边(头插）TODO
+//插入边(头插）
+void insert_edge_head(GraphLink* g, T v1, T v2){
+  int p1 = getVertexIndex(g, v1);
+  int p2 = getVertexIndex(g, v2);
 
+  if(p1 == -1 || p2 == -1)return;
 
+  Edge* p = (Edge*)malloc(sizeof(Edge));
+  p->idx = p2;
+  p->link = g->nodeTable[p1].adj;
+  g->nodeTable[p1].adj = p;
+  
+  p = (Edge*)malloc(sizeof(Edge));
+  p->idx = p1;
+  p->link = g->nodeTable[p2].adj;
+  g->nodeTable[p2].adj = p;  
+}
 //删除边
 void remove_edge(GraphLink* g, T v1, T v2){
+  int p1 = getVertexIndex(g, v1);
+  int p2 = getVertexIndex(g, v2);
+
+  if(p1 == -1 || p2 == -1)return;
 
 }
