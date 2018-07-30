@@ -48,4 +48,12 @@ int main(){
   remove_vertex(&gl, 'C');
   //显示图
   show_graph_link(&gl);
+
+  //临街顶点的下标
+  int v = get_first_neighbor(&gl, 'B');
+  printf("%d\n", v);
+  v = get_next_neighbor(&gl, 'B', 'A');
+  printf("%d\n", v);
+  //销毁图
+  destroy_graph_link(&gl);
 }

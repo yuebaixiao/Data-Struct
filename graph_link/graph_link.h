@@ -48,5 +48,11 @@ void insert_edge_head(GraphLink* g, T v1, T v2);
 void remove_edge(GraphLink* g, T v1, T v2);
 //删除顶点
 void remove_vertex(GraphLink* g, T v);
+//销毁图
+void destroy_graph_link(GraphLink* g);
+//取得指定顶点的第一个后序顶点
+int get_first_neighbor(GraphLink* g, T v);
+//取得指定顶点v1的临街顶点v2的第一个后序顶点
+int get_next_neighbor(GraphLink* g, T v1, T v2);
 
 #endif

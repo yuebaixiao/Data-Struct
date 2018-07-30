@@ -154,6 +154,8 @@ void remove_vertex(GraphLink* g, T v){
     free(tmp);
   }
 
+  //让被删除顶点那行，指向最后一个顶点那行。
+  //因为最后一行向上移动了，所以要修改和最后一行有连线的点那行的线的下标。
   g->nodeTable[p].data = g->nodeTable[g->NumVertices - 1].data;
   g->nodeTable[p].adj = g->nodeTable[g->NumVertices - 1].adj;
   tmp = g->nodeTable[p].adj;
@@ -168,4 +170,50 @@ void remove_vertex(GraphLink* g, T v){
     tmp = tmp->link;
   }
   g->NumVertices--;
+}
+//销毁图
+void destroy_graph_link(GraphLink* g){
+  //释放所有边的内存空间
+  Edge* t = NULL;
+  Edge* p = NULL;
+  for(int i = 0; i< g->NumVertices; ++i){
+    t = g->nodeTable[i].adj;
+    while(NULL != t){
+      p = t;
+      t = t->link;
+      free(p);
+    }
+  }
+
+  //释放所有顶点的内存空间
+  free(g->nodeTable);
+  g->nodeTable = NULL;
+  g->MaxVertices = g->NumVertices = g->NumEdges = 0;
+}
+
+//取得指定顶点的第一个后序顶点
+int get_first_neighbor(GraphLink* g, T v){
+  int i = getVertexIndex(g, v);
+  if (-1 == i)return -1;
+  Edge* p = g->nodeTable[i].adj;
+  if(NULL != p)
+    return p->idx;
+  else
+    return -1;
+}
+
+//取得指定顶点v1的临街顶点v2的第一个后序顶点
+int get_next_neighbor(GraphLink* g, T ve1, T ve2){
+  int v1 = getVertexIndex(g, ve1);
+  int v2 = getVertexIndex(g, ve2);
+  if(v1 == -1 || v2 == -1)return -1;
+
+  Edge* t = g->nodeTable[v1].adj;
+  while(t != NULL && t->idx != v2){
+    t = t->link;
+  }
+  if(NULL != t && t->link != NULL){
+    return t->link->idx;
+  }
+  return -1;
 }
