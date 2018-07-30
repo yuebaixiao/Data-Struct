@@ -32,7 +32,20 @@ int main(){
   insert_edge_head(&gl, 'C', 'D');
   insert_edge_head(&gl, 'C', 'E');
   //*/
-  
+  //显示图
+  show_graph_link(&gl);
+
+  printf("\n");
+
+  //删除边
+  remove_edge(&gl, 'A', 'D');
+  //显示图
+  show_graph_link(&gl);
+
+  printf("\n");
+
+  //删除顶点
+  remove_vertex(&gl, 'C');
   //显示图
   show_graph_link(&gl);
 }

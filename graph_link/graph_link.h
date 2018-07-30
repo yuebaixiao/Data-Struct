@@ -46,4 +46,7 @@ void insert_edge_tail(GraphLink* g, T v1, T v2);
 void insert_edge_head(GraphLink* g, T v1, T v2);
 //删除边
 void remove_edge(GraphLink* g, T v1, T v2);
+//删除顶点
+void remove_vertex(GraphLink* g, T v);
+
 #endif

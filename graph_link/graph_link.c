@@ -87,10 +87,85 @@ void insert_edge_head(GraphLink* g, T v1, T v2){
   g->nodeTable[p2].adj = p;  
 }
 //删除边
+int remove_edge_(Edge** p, int i){
+  if(NULL == *p)return -1;
+  Edge* f;
+  //判断第一个边是否是目标边
+  if((*p)->idx == i){
+    //删除第一条边
+    f = *p;
+    *p = (*p)->link;
+    free(f);
+    return 0;
+  }
+
+  Edge* tmp = *p;
+  while(tmp->link != NULL && tmp->link->idx != i){
+    tmp = tmp->link;
+  }
+  //没有找到边
+  if(tmp->link == NULL){
+    return -1;
+  }
+  //找到边
+  else{
+    f = tmp->link;
+    tmp->link = tmp->link->link;
+    free(f);
+    return 0;
+  }
+
+}
 void remove_edge(GraphLink* g, T v1, T v2){
   int p1 = getVertexIndex(g, v1);
   int p2 = getVertexIndex(g, v2);
 
   if(p1 == -1 || p2 == -1)return;
 
+  int r = remove_edge_(&(g->nodeTable[p1].adj), p2);
+  if(r == 0){
+    g->NumEdges--;
+    remove_edge_(&(g->nodeTable[p2].adj), p1);
+    g->NumEdges--;
+  }
+
+}
+//删除顶点
+void remove_vertex(GraphLink* g, T v){
+  int p = getVertexIndex(g, v);
+
+  if(p == -1)return;
+
+  //删除目标顶点以外的顶点，与目标顶点之间的边
+  for(int i = 0; i < g->NumVertices; ++i){
+    if(i == p){
+      continue;
+    }else{
+      remove_edge_(&(g->nodeTable[i].adj), p);
+    }
+  }
+
+  //删除目标顶点行的所有边
+  Edge* te = g->nodeTable[p].adj;
+  Edge* tmp;
+  while(te != NULL){
+    tmp = te;
+    te = te->link;
+    free(tmp);
+  }
+
+  g->nodeTable[p].data = g->nodeTable[g->NumVertices - 1].data;
+  g->nodeTable[p].adj = g->nodeTable[g->NumVertices - 1].adj;
+  tmp = g->nodeTable[p].adj;
+  Edge* q;
+  while(tmp != NULL){
+    q = g->nodeTable[tmp->idx].adj;
+    while(q != NULL && q->idx != g->NumVertices - 1){
+      q = q->link;
+    }
+    q->idx = p;
+
+    tmp = tmp->link;
+  }
+  g->NumVertices--;
 }
