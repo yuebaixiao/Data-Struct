@@ -217,38 +217,33 @@ int get_next_neighbor(GraphLink* g, T ve1, T ve2){
   }
   return -1;
 }
-
+//取得顶点的data值
+T getVertexValue(GraphLink* g, int i){
+  if(i == -1)return 0;
+  return g->nodeTable[i].data;
+}
 //深度遍历
-void dfs_graph_v(GraphLink* g, Vertex* v, bool* visited){
-
-  Edge* p = v->adj;
-  if(p != NULL){
-    if(!visited[p->idx]){
-      printf("%d ", p->idx);
-    
-      visited[p->idx] = true;
-      dfs_graph_v(g, &(g->nodeTable[p->idx]), visited);
+void dfs_graph_v(GraphLink* g, int v, bool* visited){
+  printf("%c->", getVertexValue(g,v));
+  visited[v] = true;
+  //取得相邻顶点的下标
+  int w = get_first_neighbor(g, getVertexValue(g, v));
+  while(w != -1){
+    if(!visited[w]){
+      dfs_graph_v(g, w, visited);
     }
+    w = get_next_neighbor(g, getVertexValue(g, v), getVertexValue(g,w));
   }
 }
 void dfs_graph(GraphLink* g, T v){
   int cnt = g->NumVertices;
-  bool* visited = (bool*)malloc(sizeof(bool));
+  bool* visited = (bool*)malloc(sizeof(bool) * cnt);
   assert(NULL != visited);
   for(int i = 0; i < cnt; ++i){
     visited[i] =  false;
   }
   
   int index = getVertexIndex(g, v);
-  Vertex* p = &(g->nodeTable[index]);
-  Edge* e = p->adj;
-  while(NULL != e){
-    dfs_graph_v(g, p, visited);
-    printf("\n");
-    e = e->link;
-    if(NULL != e){
-      p = &(g->nodeTable[e->idx]);
-    }
-  }
-
+  dfs_graph_v(g, index, visited);
+  free(visited);
 }

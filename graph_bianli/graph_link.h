@@ -58,6 +58,8 @@ int get_next_neighbor(GraphLink* g, T v1, T v2);
 
 //深度遍历
 void dfs_graph(GraphLink* g, T v);
+//取得顶点的data值
+T getVertexValue(GraphLink* g, int i);
 //广度遍历
 
 #endif

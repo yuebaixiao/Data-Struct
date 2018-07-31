@@ -32,4 +32,5 @@ int main(){
 
   //深度遍历
   dfs_graph(&gl, 'A');
+  printf("null\n");
 }
