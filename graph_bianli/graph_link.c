@@ -1,4 +1,5 @@
 #include "graph_link.h"
+#include "nodequeue.h"
 
 //初始化图
 void init_graph_link(GraphLink* g){
@@ -222,6 +223,7 @@ T getVertexValue(GraphLink* g, int i){
   if(i == -1)return 0;
   return g->nodeTable[i].data;
 }
+
 //深度遍历
 void dfs_graph_v(GraphLink* g, int v, bool* visited){
   printf("%c->", getVertexValue(g,v));
@@ -246,4 +248,46 @@ void dfs_graph(GraphLink* g, T v){
   int index = getVertexIndex(g, v);
   dfs_graph_v(g, index, visited);
   free(visited);
+}
+
+//广度遍历
+void cfs_graph(GraphLink* g, T v){
+
+  //创建一个辅助的bool数组，用来识别哪个顶点已经被遍历过了
+  int cnt = g->NumVertices;
+  bool* visited = (bool*)malloc(sizeof(bool) * cnt);
+  assert(NULL != visited);
+  for(int i = 0; i < cnt; ++i){
+    visited[i] =  false;
+  }
+
+  //创建队列
+  NodeQueue q;
+  init(&q);
+  //入队
+  int tar = getVertexIndex(g, v);
+  enQueue(&q, tar);
+
+  //队列不为空就执行
+  while(length(&q) != 0){
+    //取得队列的第一个元素
+    int ve = getHead(&q)->data;
+
+    printf("%c->", getVertexValue(g, ve));
+    visited[ve] = true;
+
+    //出队
+    deQueue(&q);
+
+    Edge* e = g->nodeTable[ve].adj;
+    while(NULL != e){
+      //如果这个顶点没有被遍历过,入队
+      if(!visited[e->idx]){
+	visited[e->idx] = true;
+	enQueue(&q, e->idx);
+      }
+      e = e->link;
+    }
+  }
+  
 }

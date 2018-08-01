@@ -31,6 +31,9 @@ int main(){
   show_graph_link(&gl);
 
   //深度遍历
-  dfs_graph(&gl, 'A');
+  dfs_graph(&gl, 'E');
+  printf("null\n");
+  //广度遍历
+  cfs_graph(&gl, 'F');
   printf("null\n");
 }

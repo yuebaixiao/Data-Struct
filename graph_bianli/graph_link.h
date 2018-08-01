@@ -61,5 +61,6 @@ void dfs_graph(GraphLink* g, T v);
 //取得顶点的data值
 T getVertexValue(GraphLink* g, int i);
 //广度遍历
+void cfs_graph(GraphLink* g, T v);
 
 #endif
