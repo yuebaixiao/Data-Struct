@@ -73,7 +73,7 @@ void insert_edge(GraphMtx* gm, T v1, T v2, E cost){
   int j = getVertexIndex(gm, v1);
   int k = getVertexIndex(gm, v2);
   //说明找到顶点了,并且点之间还没有线
-  if(j != -1 && k != -1 && gm->Edge[j][k] != 1){
+  if(j != -1 && k != -1 ){
     //因为是无方向，所以更新2个值
     gm->Edge[j][k] = gm->Edge[k][j] = cost;
     //边数加一
@@ -174,10 +174,58 @@ int getNextNeighbor(GraphMtx* gm, T v1, T v2){
   return -1;
 }
 
+//取得2个顶点间的权重
+E getWeight(GraphMtx* g, int i1, int i2){
+  if(i1 == -1 || i2 == -1)
+    return MAX_COST;
+  else
+    return g->Edge[i1][i2];
+}
 //用prim算法作成最小树
 void minSpanTree_prim(GraphMtx* g, T v){
   int n = g->NumVertices;
   E* lowcost = (E*)malloc(sizeof(E) * n);
   int* mst = (int*)malloc(sizeof(int) * n);
   assert(lowcost != NULL && mst != NULL);
+
+  int k = getVertexIndex(g, v);
+
+  for(int i = 0; i < n; ++i){
+    if(i != k){
+      lowcost[i] = getWeight(g, k, i);
+      mst[i] = k;
+    }
+    else{
+      lowcost[i] = 0;
+    }
+  }
+
+  int min, min_index;
+  int begin, end;
+  E cost;
+  for(int i = 0; i < n - 1; ++i){
+    min = MAX_COST;
+    min_index = -1;
+    for(int j = 0; j < n; ++j){
+      if(lowcost[j] != 0 && lowcost[j] < min){
+	min = lowcost[j];
+	min_index = j;
+      }
+    }
+    begin = mst[min_index];
+    end = min_index;
+    printf("%c->%c:%d\n",g->VerticesList[begin],g->VerticesList[end],min);
+
+    lowcost[min_index] = 0;
+
+    for(int j = 0; j < n; ++j){
+      cost = getWeight(g, min_index, j);
+      //      if(cost < lowcost[j]){
+      if(lowcost[j] != 0){
+	lowcost[j] = cost;
+	mst[j] = min_index;
+      }
+    }
+  }
+
 }

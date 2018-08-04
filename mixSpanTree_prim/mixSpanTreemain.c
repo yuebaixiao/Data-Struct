@@ -25,6 +25,10 @@ int main(){
   insert_edge(&gm, 'D', 'F', 2);
   //打印图
   show_graph(&gm);
+
+  //prim
+  minSpanTree_prim(&gm, 'E');
+
   //摧毁图
   destroy_graph(&gm);
 

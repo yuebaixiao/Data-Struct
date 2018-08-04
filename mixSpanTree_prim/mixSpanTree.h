@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <memory.h>
 
-#define Default_vertex_size 10
+#define Default_vertex_size 20
 
 #define T char//dai biao ding dian de lei xing
 #define E int
@@ -43,6 +43,7 @@ int getNextNeighbor(GraphMtx* gm, T v1, T v2);
 
 //用prim算法作成最小树
 void minSpanTree_prim(GraphMtx* gm, T v);
-
+//取得2个顶点间的权重
+E getWeight(GraphMtx* g, int i1, int i2);
 
 #endif
