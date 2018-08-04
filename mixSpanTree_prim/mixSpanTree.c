@@ -220,8 +220,8 @@ void minSpanTree_prim(GraphMtx* g, T v){
 
     for(int j = 0; j < n; ++j){
       cost = getWeight(g, min_index, j);
-      //      if(cost < lowcost[j]){
-      if(lowcost[j] != 0){
+      if(cost < lowcost[j]){
+      //if(lowcost[j] != 0){
 	lowcost[j] = cost;
 	mst[j] = min_index;
       }
