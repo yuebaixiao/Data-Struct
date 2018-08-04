@@ -29,7 +29,4 @@ int main(){
   //kruskal
   minSpanTree_kruskal(&gm);
 
-  //摧毁图
-  destroy_graph(&gm);
-
 }

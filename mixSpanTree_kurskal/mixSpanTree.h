@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <memory.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define Default_vertex_size 20
 
@@ -37,16 +38,6 @@ void show_graph(GraphMtx* gm);
 void insert_vertex(GraphMtx* gm, T v);
 //添加顶点间的线
 void insert_edge(GraphMtx* gm, T v1, T v2, E cost);
-//删除顶点
-void remove_vertex(GraphMtx* gm, T v);
-//删除顶点间的线
-void remove_edge(GraphMtx* gm, T v1, T v2);
-//摧毁图
-void destroy_graph(GraphMtx* gm);
-//取得与v顶点有连线的第一个顶点
-int getNeighbor(GraphMtx* gm, T v);
-//取得与v1顶点，v1顶点之后的v2顶点的之后的有连线的第一个顶点
-int getNextNeighbor(GraphMtx* gm, T v1, T v2);
 
 //用kruskal算法构造最小生成树
 void minSpanTree_kruskal(GraphMtx* gm);
