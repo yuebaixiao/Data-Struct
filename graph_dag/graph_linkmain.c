@@ -11,6 +11,7 @@ int main(){
   insert_vertex(&gl, 'D');
   insert_vertex(&gl, 'E');
   insert_vertex(&gl, 'F');
+  insert_vertex(&gl, 'G');
 
   //插入边(头插)
   insert_edge_head(&gl, 'A', 'B');
@@ -21,6 +22,9 @@ int main(){
   insert_edge_head(&gl, 'D', 'E');
   insert_edge_head(&gl, 'F', 'D');
   insert_edge_head(&gl, 'F', 'E');
+  insert_edge_head(&gl, 'G', 'B');
+  insert_edge_head(&gl, 'G', 'D');
+  insert_edge_head(&gl, 'D', 'C');
 
   //显示图
   show_graph_link(&gl);
