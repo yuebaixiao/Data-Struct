@@ -10,6 +10,7 @@
 
 #define T char//dai biao ding dian de lei xing
 #define E int
+#define MAX_COST 0x7FFFFFFF
 
 typedef struct GraphMtx{
   int MaxVertices;//zui da ding dian shu liang]

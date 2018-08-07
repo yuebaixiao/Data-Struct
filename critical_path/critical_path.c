@@ -111,7 +111,8 @@ void critical_path(GraphMtx* g){
   int* vl = (int*)malloc(sizeof(int) * n);
   assert(NULL != ve && NULL != vl);
   for(int i = 0; i < n; ++i){
-    ve[i] = vl[i] = 0;
+    ve[i] = 0;
+    vl[i] = MAX_COST;
   }
 
   int j, w;
@@ -133,7 +134,7 @@ void critical_path(GraphMtx* g){
     j = getNeighbor(g, g->VerticesList[i]);
     while(j != -1){
       w = getWeight(g, i, j);
-      if(vl[j] - w > vl[i]){
+      if(vl[j] - w < vl[i]){
 	vl[i] = vl[j] - w;
       }
       j = getNextNeighbor(g,g->VerticesList[i],g->VerticesList[j]);
