@@ -30,4 +30,6 @@ int main(){
   //打印图
   show_graph(&gm);
 
+  //求解关键路径
+  critical_path(&gm);
 }

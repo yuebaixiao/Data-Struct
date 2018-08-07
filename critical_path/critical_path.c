@@ -77,7 +77,7 @@ int getNeighbor(GraphMtx* gm, T v){
   int p = getVertexIndex(gm, v);
   if(-1 == p)return -1;
   for(int i = 0; i < gm->NumVertices; ++i){
-    if(gm->Edge[p][i] == 1)
+    if(gm->Edge[p][i] != 0)
       return i;
   }
   return -1;
@@ -91,13 +91,17 @@ int getNextNeighbor(GraphMtx* gm, T v1, T v2){
   if(p1 == -1 || p2 == -1)return -1;
 
   for(int i = p2 + 1; i < gm->NumVertices; ++i){
-    if(gm->Edge[p1][i] == 1)
+    if(gm->Edge[p1][i] != 0)
       return i;
   }
 
   return -1;
 }
 
+E getWeight(GraphMtx* g, int v1, int v2){
+  if(v1 == -1 || v2 == -1)return 0;
+  return g->Edge[v1][v2];
+}
 //求解关键路径
 void critical_path(GraphMtx* g){
   int n = g->NumVertices;
@@ -109,4 +113,46 @@ void critical_path(GraphMtx* g){
   for(int i = 0; i < n; ++i){
     ve[i] = vl[i] = 0;
   }
+
+  int j, w;
+  //ve
+  for(int i = 0; i < n; ++i){
+    j = getNeighbor(g, g->VerticesList[i]);
+    while(j != -1){
+      w = getWeight(g, i, j);
+      if(ve[i] + w > ve[j]){
+	ve[j] = ve[i] + w;
+      }
+      j = getNextNeighbor(g,g->VerticesList[i],g->VerticesList[j]);
+    }
+  }
+
+  //vl
+  vl[n-1] = ve[n-1];
+  for(int i = n - 2; i > 0; --i){
+    j = getNeighbor(g, g->VerticesList[i]);
+    while(j != -1){
+      w = getWeight(g, i, j);
+      if(vl[j] - w > vl[i]){
+	vl[i] = vl[j] - w;
+      }
+      j = getNextNeighbor(g,g->VerticesList[i],g->VerticesList[j]);
+    }
+  }
+
+  int e, l;
+  for(int i = 0; i < n; ++i){
+    j = getNeighbor(g, g->VerticesList[i]);
+    while(j != -1){
+      e = ve[i];
+      l = vl[j] - getWeight(g, i, j);
+      if(e == l){
+	printf("<%c, %c>是关键路径\n",g->VerticesList[i],g->VerticesList[j]);
+      }
+      j = getNextNeighbor(g,g->VerticesList[i],g->VerticesList[j]);
+    }
+  }
+
+  free(ve);
+  free(vl);
 }

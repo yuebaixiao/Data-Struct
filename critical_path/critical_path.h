@@ -33,6 +33,9 @@ int getNeighbor(GraphMtx* gm, T v);
 //取得与v1顶点，v1顶点之后的v2顶点的之后的有连线的第一个顶点
 int getNextNeighbor(GraphMtx* gm, T v1, T v2);
 
+E getWeight(GraphMtx* g, int v1, int v2);
 //求解关键路径
 void critical_path(GraphMtx* g);
+
+
 #endif
