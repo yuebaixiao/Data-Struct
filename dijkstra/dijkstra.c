@@ -98,18 +98,18 @@ void short_path(GraphMtx* g,T v,E* dist, int* path){
     dist[i] = getWeight(g, vi, i);
     s[i] = false;
     if(i != vi && dist[i] < MAX_COST){
-      path[i] = v;
+      path[i] = vi;
     }
     else{
       path[i] = -1;
     }
   }
 
-  s[v] = true;
+  s[vi] = true;
   int min;
   int w;
-  for(int i = 0; i < n -1; ++i){
-    mix = MAX_COST;
+  for(int i = 0; i < n - 1; ++i){
+    min = MAX_COST;
     //u为最短路径顶点的下标
     int u = vi;
     for(int j = 0; j < n; ++j){
@@ -121,8 +121,8 @@ void short_path(GraphMtx* g,T v,E* dist, int* path){
     //把u加入到s集合
     s[u] = true;
 
-    //更新下一个点都所有点的权值
-    for(int k = 0; i < n; ++k){
+    //更新下一个点到所有点的权值
+    for(int k = 0; k < n; ++k){
       w = getWeight(g, u, k);
       if(!s[k] && w < MAX_COST && dist[u] + w < dist[k]){
 	dist[k] = dist[u] + w;
