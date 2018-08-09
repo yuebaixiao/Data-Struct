@@ -31,10 +31,14 @@ T min(BST* bst);
 T max(BST* bst);
 //排序
 void sort(BST* bst);
+//查找父节点
+BSTNode* get_parent(BST* bst, BSTNode* tar);
 //删除节点
 BOOL remove_bst(BST* bst, T key);
 //搜索节点
 BSTNode* search_bst(BST* bst, T key);
+//搜索节点
+BSTNode* search_bst1(BST* bst, T key);
 //清空树
 void clear_bst(BST* bst);
 
