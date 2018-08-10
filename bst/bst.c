@@ -132,72 +132,6 @@ BOOL remove_bst(BST* bst, T key){
   //树为空或者要删除的节点不存在，返回失败
   if(bst->root == NULL || NULL == tar) return FALSE;
 
-  //目标节点root节点
-  /*
-  if(bst->root == tar){
-    //root节点没有右子节点
-    if(tar->right == NULL){
-      //root节点没有左子节点
-      if(tar->left == NULL){
-	free(bst->root);
-	bst->root = NULL;
-      }
-      //root节点有做左节点
-      else{
-	BSTNode* p = tar->left;
-	//因为root节点的左子节点没有右子节点，所以root节点的左子节点就是新的root
-	if(NULL == p->right){
-	  BSTNode* tmp = bst->root;
-	  bst->root = bst->root->left;
-	  free(tmp);
-	  return TRUE;
-	}
-	//root节点的左子节点有右子节点
-	else{
-	  //因为root没有右子节点，所以要在root的左子节点中找到最大值，作为新的root
-	  //以root节点的左子节点为根节点的最右的右节点，就是值最大的节点。
-	  while(p->right != NULL){
-	    p = p->right;
-	  }
-	  BSTNode* tmp = bst->root;
-	  BSTNode* parent = get_parent(bst, p);
-	  bst->root = p;
-	  parent->right = p->left;
-	  p->left = tmp->left;
-	  free(tmp);
-	  return TRUE;
-	}
-      }
-    }
-    //root节点有右子节点
-    else{
-      BSTNode* p = tar->right;
-      //因为root节点的右子节点没有左子节点，所以root节点的右子节点就是新的root
-      if(NULL == p->left){
-	BSTNode* tmp = bst->root;
-	bst->root = bst->root->right;
-	bst->root->left = tmp->left;
-	free(tmp);
-	return TRUE;
-      }
-      //root节点的右子节点有左子节点
-      else{
-	  //因为root右子节点中有左子节点，所以要在root的右子节点中找到最小值，作为新的root
-	  //以root节点的右子节点为根节点的最左的左节点，就是值最小的节点。
-	  while(p->left != NULL){
-	    p = p->left;
-	  }
-	  BSTNode* tmp = bst->root;
-	  BSTNode* parent = get_parent(bst, p);
-	  bst->root = p;
-	  parent->left = p->right;
-	  p->right = tmp->right;
-	  free(tmp);
-	  return TRUE;
-      }
-    }
-  }
-  */
   BSTNode* parent = get_parent(bst, tar);
   //因为要被删除的顶点有左子节点，所以要找到以左子节点为根的右子节点中值最大的
   BSTNode* X = NULL;
@@ -230,15 +164,16 @@ BOOL remove_bst(BST* bst, T key){
     if(NULL == X){
       //找到父节点
       BSTNode* X2 = get_parent(bst, X);
+      //要被删除的节点不是根节点
       if(parent != NULL){
-      //要被删除的顶点在父节点的左边
-      if(tar->data < parent->data){
-	parent->left = X;
-      }
-      //要被删除的顶点在父节点的右边
-      else{
-	parent->right = X;
-      }
+	//要被删除的顶点在父节点的左边
+	if(tar->data < parent->data){
+	  parent->left = X;
+	}
+	//要被删除的顶点在父节点的右边
+	else{
+	  parent->right = X;
+	}
       }
       else{
 	bst->root = NULL;
@@ -261,15 +196,16 @@ BOOL remove_bst(BST* bst, T key){
       X->left = tar->left;
     }
   }
+  //要被删除的节点不是根节点
   if(parent != NULL){
-  //要被删除的顶点在父节点的左边
-  if(tar->data < parent->data){
-    parent->left = X;
-  }
-  //要被删除的顶点在父节点的右边
-  else{
-    parent->right = X;
-  }
+    //要被删除的顶点在父节点的左边
+    if(tar->data < parent->data){
+      parent->left = X;
+    }
+    //要被删除的顶点在父节点的右边
+    else{
+      parent->right = X;
+    }
   }
   else{
     bst->root = X;
