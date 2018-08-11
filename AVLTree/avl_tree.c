@@ -13,9 +13,14 @@ AVLNode* malNode(Type x){
     return t;
 }
 //右旋转
-void rotateR(AVLNode* t){
-  t->right = NULL;
-  t->right->left = t;
+void rotateR(AVLNode** t){
+  AVLNode* subR = *t;
+  *t = (*t)->left;
+  subR->left = (*t)->right;
+  (*t)->right = subR;
+  (*t)->bf = 0;
+  subR->bf = 0;//???tODO
+
 }
 //插入树的节点
 BOOL insert_avl_node(AVLNode** t, Type x){
@@ -71,7 +76,7 @@ BOOL insert_avl_node(AVLNode** t, Type x){
       if(p->bf == flag){
 	//因为是撇/，所以右旋转
 	if(flag == -1){
-	  rotateR(parent);
+	  rotateR(&parent);
 	}
 	//因为是捺\，所以左旋转
 	else{
@@ -92,6 +97,22 @@ BOOL insert_avl_node(AVLNode** t, Type x){
     }
   }
   
+  
+  if(length(&st) == 0){
+    *t = parent;
+  }
+  else{
+    AVLNode* q = getTop(&st);
+    if(q->data > parent->data){
+      q->left = parent;
+    }
+    else{
+      q->right = parent;
+    }
+  }
+  
+
+  clear(&st);
   return TRUE;
 }
 //插入节点
