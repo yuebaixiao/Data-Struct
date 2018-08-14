@@ -19,8 +19,70 @@ void rotateR(AVLNode** t){
   subR->left = (*t)->right;
   (*t)->right = subR;
   (*t)->bf = 0;
-  subR->bf = 0;//???tODO
+  subR->bf = 0;
 
+}
+//左旋转
+void rotateL(AVLNode** t){
+  AVLNode* subL = *t;
+  *t = (*t)->right;
+  subL->right = (*t)->left;
+  (*t)->left = subL;
+  (*t)->bf = 0;
+  subL->bf = 0;
+
+}
+//左右旋转
+void rotateLR(AVLNode** t){
+  AVLNode* subR = *t;
+  AVLNode* subL = subR->left;
+  *t = subL->right;
+
+  subL->right = (*t)->left;
+  (*t)->left = subL;
+  if((*t)->bf <= 0){///??
+    subL->bf = 0;
+  }
+  else{
+    subL->bf = -1;
+  }
+
+  subR->left = (*t)->right;
+  (*t)->right = subR;
+  if((*t)->bf == -1){
+    subR->bf = 1;//???
+  }
+  else{
+    subR->bf = 0;//???
+  }
+
+  (*t)->bf = 0;  
+}
+//右左旋转
+void rotateRL(AVLNode** t){
+  AVLNode* subL = *t;
+  AVLNode* subR = subL->right;
+  *t = subR->left;
+  
+  subR->left = (*t)->right;
+  (*t)->right = subR;
+  if((*t)->bf >= 0){
+    subR->bf = 0;
+  }
+  else{
+    subR->bf = 1;
+  }
+
+  subL->right = (*t)->left;
+  (*t)->left = subL;
+  if((*t)->bf == 1){
+    subL->bf = -1;
+  }
+  else{
+    subL->bf = 0;
+  }
+
+  (*t)->bf = 0;
 }
 //插入树的节点
 BOOL insert_avl_node(AVLNode** t, Type x){
@@ -80,20 +142,21 @@ BOOL insert_avl_node(AVLNode** t, Type x){
 	}
 	//因为是捺\，所以左旋转
 	else{
-	  //rotateL(parent);
+	  rotateL(&parent);
 	}
       }
       //符号不同，说明是折线，所以双旋转
       else{
 	//折线的角指向右>
 	if(flag == 1){
-	  //rotateRL(parent);
+	  rotateRL(&parent);
 	}
 	//折线的角指向左<
 	else{
-	  //rotateLR(parent);
+	  rotateLR(&parent);
 	}
       }
+      break;
     }
   }
   
